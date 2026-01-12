@@ -2045,6 +2045,19 @@ ul {
         display: flex;
     }
 
+    /* Floating buttons positioning */
+    .floating-btn {
+        bottom: 20px;
+    }
+
+    .floating-btn.whatsapp {
+        left: 20px;
+    }
+
+    .floating-btn.call {
+        right: 20px;
+    }
+
     /* Hero Mobile */
     .hero {
         height: 70vh;
