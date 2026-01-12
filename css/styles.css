@@ -181,13 +181,15 @@ ul {
 .floating-buttons {
     position: fixed;
     bottom: 24px;
+    left: 0;
+    right: 0;
     z-index: 999;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
+    pointer-events: none;
 }
 
 .floating-btn {
+    position: fixed;
+    bottom: 24px;
     width: 56px;
     height: 56px;
     border-radius: 50%;
@@ -198,6 +200,7 @@ ul {
     color: var(--text-light);
     box-shadow: var(--shadow-lg);
     transition: var(--transition-normal);
+    pointer-events: auto;
 }
 
 .floating-btn:hover {
@@ -207,13 +210,11 @@ ul {
 .floating-btn.whatsapp {
     background: #25D366;
     left: 24px;
-    position: fixed;
 }
 
 .floating-btn.call {
     background: var(--primary);
     right: 24px;
-    position: fixed;
 }
 
 /* ===================================
@@ -2209,6 +2210,15 @@ ul {
         width: 48px;
         height: 48px;
         font-size: 20px;
+        bottom: 16px;
+    }
+
+    .floating-btn.whatsapp {
+        left: 16px;
+    }
+
+    .floating-btn.call {
+        right: 16px;
     }
 }
 
