@@ -1985,6 +1985,43 @@ ul {
     .nav-link {
         padding: 16px 0;
         border-bottom: 1px solid var(--border-light);
+        display: block;
+        width: 100%;
+    }
+
+    /* Fix nav-link active/hover line for mobile - hide the pseudo-element */
+    .nav-link::after {
+        display: none;
+    }
+
+    /* Use border-left for active indicator in mobile menu */
+    .nav-link.active {
+        border-left: 3px solid var(--secondary);
+        padding-left: 12px;
+        background: rgba(30, 96, 145, 0.05);
+    }
+
+    /* Footer contact icons alignment */
+    .footer-contact-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .footer-contact-item i {
+        flex-shrink: 0;
+        margin-top: 3px;
+    }
+
+    /* Package card icon alignment */
+    .package-details {
+        flex-wrap: wrap;
+    }
+
+    .package-details .duration,
+    .package-details .price {
+        display: flex;
+        align-items: center;
     }
 
     .nav-cta {
