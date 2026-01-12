@@ -1991,12 +1991,19 @@ ul {
 
     /* Fix nav-link active/hover line for mobile - hide the pseudo-element */
     .nav-link::after {
-        display: none;
+        display: none !important;
+        width: 0 !important;
+    }
+
+    .nav-link:hover::after,
+    .nav-link.active::after {
+        display: none !important;
+        width: 0 !important;
     }
 
     /* Use border-left for active indicator in mobile menu */
     .nav-link.active {
-        border-left: 3px solid var(--secondary);
+        border-left: 3px solid var(--secondary) !important;
         padding-left: 12px;
         background: rgba(30, 96, 145, 0.05);
     }
