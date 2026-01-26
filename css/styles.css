@@ -1936,13 +1936,27 @@ ul {
         --section-padding: 50px;
     }
 
+    /* Navbar Mobile - reduce height to eliminate white band */
+    .navbar {
+        height: 70px;
+    }
+
+    .logo img {
+        height: 60px;
+    }
+
+    /* Hero section margin adjustment for smaller navbar */
+    .hero {
+        margin-top: 70px;
+    }
+
     /* Navigation Mobile */
     .nav-menu {
         position: fixed;
-        top: 110px;
+        top: 70px;
         right: -100%;
         width: 280px;
-        height: calc(100vh - 110px);
+        height: calc(100vh - 70px);
         background: var(--bg-white);
         flex-direction: column;
         align-items: stretch;
