@@ -1093,7 +1093,7 @@ ul {
     position: relative;
     height: 45vh;
     min-height: 350px;
-    margin-top: 70px;
+    margin-top: 110px;
     background-size: cover;
     background-position: center;
     display: flex;
@@ -1939,10 +1939,10 @@ ul {
     /* Navigation Mobile */
     .nav-menu {
         position: fixed;
-        top: 70px;
+        top: 110px;
         right: -100%;
         width: 280px;
-        height: calc(100vh - 70px);
+        height: calc(100vh - 110px);
         background: var(--bg-white);
         flex-direction: column;
         align-items: stretch;
@@ -2487,13 +2487,58 @@ ul {
 }
 
 /* ===================================
+   BREADCRUMB NAVIGATION
+   =================================== */
+.breadcrumb-nav {
+    position: relative;
+    margin-top: 110px;
+    background: var(--bg-light);
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.breadcrumb-list {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: var(--text-muted);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.breadcrumb-list li a {
+    color: var(--text-secondary);
+    transition: var(--transition-fast);
+}
+
+.breadcrumb-list li a:hover {
+    color: var(--primary);
+}
+
+.breadcrumb-list li.current {
+    color: var(--primary);
+    font-weight: 500;
+}
+
+.breadcrumb-list li span {
+    color: var(--text-muted);
+}
+
+/* When breadcrumb-nav is present, yatra-hero doesn't need margin-top */
+.breadcrumb-nav+.yatra-hero {
+    margin-top: 0;
+}
+
+/* ===================================
    YATRA HERO SECTION
    =================================== */
 .yatra-hero {
     position: relative;
     height: 60vh;
     min-height: 450px;
-    margin-top: 70px;
+    margin-top: 110px;
     background-size: cover;
     background-position: center;
     display: flex;
