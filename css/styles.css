@@ -225,7 +225,7 @@ ul {
     top: 0;
     left: 0;
     right: 0;
-    height: 70px;
+    height: 110px;
     background: var(--bg-white);
     box-shadow: var(--shadow-sm);
     z-index: 1000;
@@ -244,7 +244,7 @@ ul {
 }
 
 .logo img {
-    height: 50px;
+    height: 100px;
     width: auto;
     border-radius: var(--radius-sm);
 }
@@ -354,7 +354,7 @@ ul {
     position: relative;
     height: 85vh;
     min-height: 600px;
-    margin-top: 70px;
+    margin-top: 110px;
     overflow: hidden;
 }
 
@@ -2382,5 +2382,1208 @@ ul {
     .dest-info {
         flex-direction: column;
         gap: 8px;
+    }
+}
+
+/* ===================================
+   YATRA SECTION COMPONENTS
+   Premium Spiritual Pilgrimage Styles
+   =================================== */
+
+/* Additional Spiritual Colors */
+:root {
+    --saffron: #FF6B35;
+    --deep-maroon: #8B1538;
+    --spiritual-gold: #C9A227;
+    --lotus-pink: #E8A0BF;
+    --temple-red: #C41E3A;
+}
+
+/* ===================================
+   MEGA MENU NAVIGATION
+   =================================== */
+.nav-dropdown {
+    position: relative;
+}
+
+.nav-dropdown>.nav-link {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.nav-dropdown>.nav-link::after {
+    content: '\f107';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    font-size: 12px;
+    transition: var(--transition-fast);
+}
+
+.nav-dropdown:hover>.nav-link::after {
+    transform: rotate(180deg);
+}
+
+.mega-menu {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    background: var(--bg-white);
+    min-width: 650px;
+    padding: 32px;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-xl);
+    opacity: 0;
+    visibility: hidden;
+    transition: var(--transition-normal);
+    z-index: 1000;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+.nav-dropdown:hover .mega-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+.mega-menu-column h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--secondary);
+}
+
+.mega-menu-column ul li {
+    margin-bottom: 8px;
+}
+
+.mega-menu-column ul li a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    font-size: 14px;
+    color: var(--text-secondary);
+    border-radius: var(--radius-sm);
+    transition: var(--transition-fast);
+}
+
+.mega-menu-column ul li a:hover {
+    background: var(--bg-light);
+    color: var(--primary);
+    padding-left: 16px;
+}
+
+.mega-menu-column ul li a i {
+    color: var(--saffron);
+    width: 18px;
+}
+
+/* ===================================
+   YATRA HERO SECTION
+   =================================== */
+.yatra-hero {
+    position: relative;
+    height: 60vh;
+    min-height: 450px;
+    margin-top: 70px;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.yatra-hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg,
+            rgba(139, 21, 56, 0.85) 0%,
+            rgba(30, 96, 145, 0.8) 100%);
+}
+
+.yatra-hero-content {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    color: var(--text-light);
+    max-width: 800px;
+    padding: 0 20px;
+}
+
+.yatra-hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    padding: 8px 20px;
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.yatra-hero-badge i {
+    color: var(--spiritual-gold);
+}
+
+.yatra-hero h1 {
+    font-size: 52px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.yatra-hero .tagline {
+    font-size: 20px;
+    font-weight: 300;
+    font-style: italic;
+    opacity: 0.95;
+    margin-bottom: 32px;
+}
+
+/* ===================================
+   SPIRITUAL INTRO SECTION
+   =================================== */
+.spiritual-intro {
+    padding: 80px 0;
+    background: var(--bg-white);
+    position: relative;
+}
+
+.spiritual-intro::before {
+    content: '☸';
+    position: absolute;
+    top: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 32px;
+    color: var(--saffron);
+    opacity: 0.3;
+}
+
+.intro-content {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.intro-content h2 {
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 24px;
+    position: relative;
+    display: inline-block;
+}
+
+.intro-content h2::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--saffron), var(--spiritual-gold));
+    border-radius: 2px;
+}
+
+.intro-content p {
+    font-size: 17px;
+    line-height: 1.9;
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+}
+
+.intro-content p:first-of-type::first-letter {
+    font-size: 56px;
+    font-weight: 700;
+    color: var(--deep-maroon);
+    float: left;
+    line-height: 1;
+    margin-right: 12px;
+    margin-top: 4px;
+}
+
+/* ===================================
+   MYTHOLOGY SECTION
+   =================================== */
+.mythology-section {
+    padding: 80px 0;
+    background: linear-gradient(135deg, #FEF9E7 0%, #FDEBD0 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.mythology-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 5L35 25H55L39 38L45 58L30 45L15 58L21 38L5 25H25L30 5Z' fill='%23C9A227' fill-opacity='0.05'/%3E%3C/svg%3E");
+    opacity: 0.5;
+}
+
+.mythology-content {
+    position: relative;
+    z-index: 1;
+}
+
+.mythology-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+}
+
+.mythology-text h2 {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--deep-maroon);
+    margin-bottom: 24px;
+}
+
+.mythology-text p {
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--text-secondary);
+    margin-bottom: 16px;
+}
+
+.mythology-image {
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-xl);
+}
+
+.mythology-image img {
+    width: 100%;
+    height: auto;
+}
+
+.mythology-image::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 4px solid var(--spiritual-gold);
+    border-radius: var(--radius-lg);
+    pointer-events: none;
+}
+
+/* ===================================
+   TEMPLE CARDS
+   =================================== */
+.temples-section {
+    padding: 80px 0;
+    background: var(--bg-light);
+}
+
+.temples-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+}
+
+.temple-card {
+    background: var(--bg-white);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition-normal);
+    position: relative;
+}
+
+.temple-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-xl);
+}
+
+.temple-card-image {
+    height: 200px;
+    overflow: hidden;
+    position: relative;
+}
+
+.temple-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--transition-slow);
+}
+
+.temple-card:hover .temple-card-image img {
+    transform: scale(1.1);
+}
+
+.temple-card-badge {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: var(--saffron);
+    color: var(--text-light);
+    padding: 6px 12px;
+    border-radius: var(--radius-sm);
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.temple-card-content {
+    padding: 24px;
+}
+
+.temple-card-icon {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, var(--saffron), var(--spiritual-gold));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: -45px;
+    margin-bottom: 16px;
+    position: relative;
+    box-shadow: var(--shadow-md);
+}
+
+.temple-card-icon i {
+    font-size: 20px;
+    color: var(--text-light);
+}
+
+.temple-card h3 {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+}
+
+.temple-card-subtitle {
+    font-size: 13px;
+    color: var(--primary);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.temple-card p {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    margin-bottom: 16px;
+}
+
+.temple-card-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border-light);
+}
+
+.temple-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+.temple-meta-item i {
+    color: var(--saffron);
+}
+
+/* ===================================
+   ROUTE TIMELINE
+   =================================== */
+.route-section {
+    padding: 80px 0;
+    background: var(--bg-white);
+}
+
+.route-timeline {
+    position: relative;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 0;
+}
+
+.route-timeline::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(to bottom, var(--saffron), var(--spiritual-gold), var(--primary));
+    border-radius: 2px;
+}
+
+.timeline-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 48px;
+    position: relative;
+}
+
+.timeline-item:nth-child(odd) {
+    flex-direction: row-reverse;
+}
+
+.timeline-item:nth-child(odd) .timeline-content {
+    text-align: right;
+    padding-right: 60px;
+    padding-left: 0;
+}
+
+.timeline-item:nth-child(even) .timeline-content {
+    padding-left: 60px;
+}
+
+.timeline-marker {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 48px;
+    height: 48px;
+    background: var(--bg-white);
+    border: 4px solid var(--saffron);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    color: var(--saffron);
+    font-size: 16px;
+    z-index: 10;
+    box-shadow: var(--shadow-md);
+}
+
+.timeline-content {
+    flex: 1;
+    background: var(--bg-light);
+    padding: 24px;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+}
+
+.timeline-content h4 {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+}
+
+.timeline-content .location {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: var(--primary);
+    margin-bottom: 12px;
+}
+
+.timeline-content p {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+}
+
+.timeline-distance {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--saffron);
+    color: var(--text-light);
+    padding: 4px 12px;
+    border-radius: 50px;
+    font-size: 12px;
+    font-weight: 500;
+    margin-top: 12px;
+}
+
+/* ===================================
+   FAQ ACCORDION
+   =================================== */
+.faq-section {
+    padding: 80px 0;
+    background: var(--bg-light);
+}
+
+.faq-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.faq-item {
+    background: var(--bg-white);
+    border-radius: var(--radius-md);
+    margin-bottom: 16px;
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    transition: var(--transition-normal);
+}
+
+.faq-item:hover {
+    box-shadow: var(--shadow-md);
+}
+
+.faq-question {
+    width: 100%;
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    font-family: var(--font-primary);
+    transition: var(--transition-fast);
+}
+
+.faq-question:hover {
+    background: var(--bg-light);
+}
+
+.faq-question h4 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.faq-question h4 i {
+    color: var(--saffron);
+    font-size: 14px;
+}
+
+.faq-toggle {
+    width: 32px;
+    height: 32px;
+    background: var(--bg-light);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary);
+    font-size: 14px;
+    transition: var(--transition-fast);
+}
+
+.faq-item.active .faq-toggle {
+    background: var(--primary);
+    color: var(--text-light);
+    transform: rotate(180deg);
+}
+
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.4s ease;
+}
+
+.faq-item.active .faq-answer {
+    max-height: 500px;
+}
+
+.faq-answer-content {
+    padding: 0 24px 20px;
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--text-secondary);
+}
+
+/* ===================================
+   BEST TIME TO VISIT
+   =================================== */
+.best-time-section {
+    padding: 80px 0;
+    background: var(--bg-white);
+}
+
+.seasons-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+}
+
+.season-card {
+    background: var(--bg-light);
+    border-radius: var(--radius-lg);
+    padding: 32px 24px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transition: var(--transition-normal);
+}
+
+.season-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+}
+
+.season-card.recommended {
+    background: linear-gradient(135deg, var(--secondary) 0%, var(--secondary-dark) 100%);
+    color: var(--text-light);
+}
+
+.season-card.recommended::before {
+    content: '★ Best Season';
+    position: absolute;
+    top: 12px;
+    right: -30px;
+    background: var(--spiritual-gold);
+    color: var(--text-light);
+    padding: 4px 40px;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    transform: rotate(45deg);
+}
+
+.season-icon {
+    font-size: 40px;
+    margin-bottom: 16px;
+}
+
+.season-card h4 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.season-card:not(.recommended) h4 {
+    color: var(--text-primary);
+}
+
+.season-months {
+    font-size: 13px;
+    opacity: 0.8;
+    margin-bottom: 12px;
+}
+
+.season-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 16px;
+    border-radius: 50px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.season-card.recommended .season-status {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.season-card:not(.recommended) .season-status {
+    background: var(--bg-white);
+    color: var(--text-secondary);
+}
+
+.season-status.open {
+    color: var(--secondary);
+}
+
+.season-status.closed {
+    color: var(--temple-red);
+}
+
+/* ===================================
+   ENQUIRY CTA SECTION
+   =================================== */
+.enquiry-cta {
+    padding: 80px 0;
+    background: linear-gradient(135deg, var(--deep-maroon) 0%, var(--primary-dark) 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.enquiry-cta::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='50' cy='50' r='40' stroke='%23ffffff' stroke-width='0.5' fill='none' opacity='0.1'/%3E%3C/svg%3E");
+    opacity: 0.3;
+}
+
+.enquiry-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    color: var(--text-light);
+}
+
+.enquiry-content h2 {
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 16px;
+}
+
+.enquiry-content p {
+    font-size: 18px;
+    opacity: 0.9;
+    margin-bottom: 32px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.enquiry-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.btn-whatsapp {
+    background: #25D366;
+    color: var(--text-light);
+    border-color: #25D366;
+}
+
+.btn-whatsapp:hover {
+    background: #128C7E;
+    border-color: #128C7E;
+    transform: translateY(-2px);
+}
+
+.btn-call {
+    background: var(--saffron);
+    color: var(--text-light);
+    border-color: var(--saffron);
+}
+
+.btn-call:hover {
+    background: #E55A2B;
+    border-color: #E55A2B;
+    transform: translateY(-2px);
+}
+
+/* ===================================
+   YATRA PACKAGES GRID
+   =================================== */
+.yatra-packages {
+    padding: 80px 0;
+    background: var(--bg-light);
+}
+
+.yatra-packages-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+.yatra-package-card {
+    background: var(--bg-white);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition-normal);
+}
+
+.yatra-package-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-xl);
+}
+
+.yatra-package-image {
+    height: 200px;
+    overflow: hidden;
+    position: relative;
+}
+
+.yatra-package-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--transition-slow);
+}
+
+.yatra-package-card:hover .yatra-package-image img {
+    transform: scale(1.08);
+}
+
+.yatra-package-content {
+    padding: 24px;
+}
+
+.yatra-package-content h3 {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+}
+
+.yatra-package-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.yatra-package-meta span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: var(--text-secondary);
+}
+
+.yatra-package-meta i {
+    color: var(--saffron);
+}
+
+.yatra-package-price {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 16px;
+    border-top: 1px solid var(--border-light);
+}
+
+.yatra-price-tag {
+    display: flex;
+    flex-direction: column;
+}
+
+.yatra-price-tag .from {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+}
+
+.yatra-price-tag .amount {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--secondary);
+}
+
+/* ===================================
+   YATRAS HUB PAGE
+   =================================== */
+.yatras-hub {
+    padding: 80px 0;
+    background: var(--bg-light);
+}
+
+.yatra-category-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+}
+
+.yatra-category-card {
+    background: var(--bg-white);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    transition: var(--transition-normal);
+    text-decoration: none;
+}
+
+.yatra-category-card:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-xl);
+}
+
+.yatra-category-image {
+    height: 220px;
+    overflow: hidden;
+    position: relative;
+}
+
+.yatra-category-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--transition-slow);
+}
+
+.yatra-category-card:hover .yatra-category-image img {
+    transform: scale(1.1);
+}
+
+.yatra-category-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to top, rgba(139, 21, 56, 0.9) 0%, transparent 60%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 24px;
+    color: var(--text-light);
+}
+
+.yatra-category-overlay h3 {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.yatra-category-overlay p {
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+.yatra-category-content {
+    padding: 24px;
+}
+
+.yatra-category-features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.yatra-feature-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--bg-light);
+    padding: 6px 12px;
+    border-radius: 50px;
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.yatra-feature-tag i {
+    color: var(--saffron);
+}
+
+.yatra-category-cta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--primary);
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.yatra-category-cta i {
+    transition: var(--transition-fast);
+}
+
+.yatra-category-card:hover .yatra-category-cta i {
+    transform: translateX(6px);
+}
+
+/* ===================================
+   BREADCRUMB WITH SCHEMA
+   =================================== */
+.breadcrumb-nav {
+    background: var(--bg-white);
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border-light);
+    margin-top: 70px;
+}
+
+.breadcrumb-list {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+}
+
+.breadcrumb-list a {
+    color: var(--text-secondary);
+    transition: var(--transition-fast);
+}
+
+.breadcrumb-list a:hover {
+    color: var(--primary);
+}
+
+.breadcrumb-list span {
+    color: var(--text-muted);
+}
+
+.breadcrumb-list .current {
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+/* ===================================
+   YATRA MOBILE RESPONSIVE
+   =================================== */
+@media (max-width: 1024px) {
+    .mega-menu {
+        min-width: 500px;
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .mythology-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .seasons-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .yatra-packages-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .yatra-category-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+
+    /* Mega Menu Mobile */
+    .mega-menu {
+        position: fixed;
+        top: 70px;
+        left: 0;
+        right: 0;
+        min-width: 100%;
+        max-height: calc(100vh - 70px);
+        overflow-y: auto;
+        grid-template-columns: 1fr;
+        border-radius: 0;
+        transform: translateX(0) translateY(10px);
+    }
+
+    .nav-dropdown:hover .mega-menu {
+        transform: translateX(0) translateY(0);
+    }
+
+    .yatra-hero {
+        height: 50vh;
+        min-height: 380px;
+    }
+
+    .yatra-hero h1 {
+        font-size: 36px;
+    }
+
+    .yatra-hero .tagline {
+        font-size: 16px;
+    }
+
+    .intro-content h2 {
+        font-size: 28px;
+    }
+
+    .intro-content p:first-of-type::first-letter {
+        font-size: 42px;
+    }
+
+    .temples-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Timeline Mobile */
+    .route-timeline::before {
+        left: 24px;
+    }
+
+    .timeline-item,
+    .timeline-item:nth-child(odd) {
+        flex-direction: column;
+    }
+
+    .timeline-marker {
+        left: 24px;
+        transform: translateX(-50%);
+    }
+
+    .timeline-item:nth-child(odd) .timeline-content,
+    .timeline-item:nth-child(even) .timeline-content {
+        text-align: left;
+        padding-left: 64px;
+        padding-right: 0;
+    }
+
+    .seasons-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .season-card.recommended::before {
+        font-size: 9px;
+        padding: 4px 35px;
+        right: -32px;
+    }
+
+    .yatra-packages-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .yatra-category-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .enquiry-content h2 {
+        font-size: 28px;
+    }
+
+    .enquiry-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .enquiry-buttons .btn {
+        width: 100%;
+        max-width: 300px;
+    }
+}
+
+@media (max-width: 480px) {
+    .yatra-hero h1 {
+        font-size: 28px;
+    }
+
+    .yatra-hero-badge {
+        font-size: 11px;
+        padding: 6px 14px;
+    }
+
+    .intro-content h2 {
+        font-size: 24px;
+    }
+
+    .mythology-text h2 {
+        font-size: 26px;
+    }
+
+    .faq-question h4 {
+        font-size: 14px;
+    }
+
+    .timeline-content h4 {
+        font-size: 16px;
     }
 }
