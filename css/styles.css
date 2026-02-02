@@ -3522,6 +3522,15 @@ ul {
 
 @media (max-width: 768px) {
 
+    /* Mobile Logo Size */
+    .logo img {
+        height: 110px;
+    }
+
+    .navbar {
+        height: 120px;
+    }
+
     /* Mega Menu Mobile */
     .mega-menu {
         position: fixed;
