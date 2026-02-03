@@ -225,7 +225,7 @@ ul {
     top: 0;
     left: 0;
     right: 0;
-    height: 140px;
+    height: 90px;
     background: var(--bg-white);
     box-shadow: var(--shadow-sm);
     z-index: 1000;
@@ -244,7 +244,7 @@ ul {
 }
 
 .logo img {
-    height: 130px;
+    height: 80px;
     width: auto;
     border-radius: var(--radius-sm);
 }
@@ -354,7 +354,7 @@ ul {
     position: relative;
     height: 85vh;
     min-height: 600px;
-    margin-top: 110px;
+    margin-top: 90px;
     overflow: hidden;
 }
 
@@ -3524,11 +3524,11 @@ ul {
 
     /* Mobile Logo Size */
     .logo img {
-        height: 110px;
+        height: 70px;
     }
 
     .navbar {
-        height: 120px;
+        height: 80px;
     }
 
     /* Mega Menu Mobile */
