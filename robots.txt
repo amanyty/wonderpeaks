@@ -1,0 +1,12 @@
+# Robots.txt for WanderPeaks
+# https://wanderpeaks.com
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://wanderpeaks.com/sitemap.xml
+
+# Block common non-content directories
+Disallow: /.git/
+Disallow: /.agents/
