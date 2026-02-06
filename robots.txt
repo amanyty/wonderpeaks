@@ -1,12 +1,52 @@
 # Robots.txt for WanderPeaks
 # https://wanderpeaks.com
 
+# Default: Allow all crawlers
 User-agent: *
 Allow: /
 
 # Sitemap location
 Sitemap: https://wanderpeaks.com/sitemap.xml
 
-# Block common non-content directories
+# LLMs.txt for AI crawlers
+# See: https://llmstxt.org/
+LLMs-Txt: https://wanderpeaks.com/llms.txt
+
+# ===================================
+# AI Bot Permissions (Explicitly Allow)
+# ===================================
+
+# OpenAI GPTBot - Used for ChatGPT and plugins
+User-agent: GPTBot
+Allow: /
+
+# Anthropic Claude
+User-agent: Claude-Web
+Allow: /
+
+# Google AI (Gemini, Bard)
+User-agent: Google-Extended
+Allow: /
+
+# Perplexity AI
+User-agent: PerplexityBot
+Allow: /
+
+# Microsoft Copilot
+User-agent: Copilot
+Allow: /
+
+# Common Chat AI crawlers
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
+
+# ===================================
+# Block System/Development Directories
+# ===================================
+User-agent: *
 Disallow: /.git/
 Disallow: /.agents/
+Disallow: /node_modules/

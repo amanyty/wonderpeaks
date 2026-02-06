@@ -1,0 +1,53 @@
+# Wander Peaks
+
+> Premium Himalayan Trekking and Chardham Yatra Tour Operator based in Haridwar, Uttarakhand, India.
+
+## About
+
+Wander Peaks is a travel agency specializing in sacred Himalayan pilgrimages and adventure tours. With 10+ years of experience and 15,000+ happy travelers, we offer expertly curated packages for Chardham Yatra, Kedarnath, Badrinath, and other spiritual destinations in Uttarakhand.
+
+## Contact
+
+- **Phone**: +91 74510 43112
+- **Email**: chardhamyatra004@gmail.com
+- **Address**: Niranjani Akhara Road, Haridwar, Uttarakhand 249401, India
+- **Website**: https://wanderpeaks.com
+
+## Main Pages
+
+- [Home](https://wanderpeaks.com/): Main landing page with featured packages and destinations
+- [Packages](https://wanderpeaks.com/packages.html): All tour packages with pricing
+- [Destinations](https://wanderpeaks.com/destinations.html): Explore Uttarakhand destinations
+- [Services](https://wanderpeaks.com/services.html): Our travel services
+- [About Us](https://wanderpeaks.com/about.html): Company history and mission
+- [Contact](https://wanderpeaks.com/contact.html): Get in touch with us
+
+## Yatra (Pilgrimage) Pages
+
+### Ek Dham & Do Dham
+- [Kedarnath Yatra](https://wanderpeaks.com/yatras/kedarnath.html): Sacred journey to Lord Shiva's abode at 3,583m
+- [Badrinath Yatra](https://wanderpeaks.com/yatras/badrinath.html): Visit the holy shrine of Lord Vishnu
+- [Do Dham Yatra](https://wanderpeaks.com/yatras/do-dham.html): Combined Kedarnath and Badrinath pilgrimage
+
+### Char Dham
+- [Char Dham Yatra](https://wanderpeaks.com/yatras/char-dham.html): Complete four-temple circuit (Yamunotri, Gangotri, Kedarnath, Badrinath)
+- [Char Dham by Helicopter](https://wanderpeaks.com/yatras/char-dham-helicopter.html): Premium helicopter pilgrimage
+
+### Panch Kedar & Panch Badri
+- [Panch Kedar](https://wanderpeaks.com/yatras/panch-kedar.html): Five sacred Shiva temples in Garhwal
+- [Panch Badri](https://wanderpeaks.com/yatras/panch-badri.html): Five Vishnu temples in Uttarakhand
+- [Panch Prayag](https://wanderpeaks.com/yatras/panch-prayag.html): Five sacred river confluences
+
+## Key Topics
+
+- Chardham Yatra packages and itineraries
+- Kedarnath temple trek and darshan
+- Badrinath temple visit
+- Helicopter services to Char Dham
+- Uttarakhand pilgrimage planning
+- Himalayan spiritual tourism
+- Do Dham, Panch Kedar, Panch Badri circuits
+
+## Sitemap
+
+XML Sitemap: https://wanderpeaks.com/sitemap.xml
