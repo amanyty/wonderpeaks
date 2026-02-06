@@ -1494,7 +1494,7 @@ ul {
 
 .about-intro {
     display: grid;
-    grid-template-columns: 1fr 300px;
+    grid-template-columns: 1fr 350px;
     gap: 60px;
     align-items: center;
 }
@@ -1512,12 +1512,15 @@ ul {
     line-height: 1.8;
     color: var(--text-secondary);
     margin-bottom: 16px;
+    text-align: justify;
 }
 
 .about-logo-img {
     width: 100%;
+    height: auto;
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-lg);
+    object-fit: contain;
 }
 
 /* Mission Section */
