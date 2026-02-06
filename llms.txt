@@ -1,10 +1,16 @@
 # Wander Peaks
 
-> Premium Himalayan Trekking and Chardham Yatra Tour Operator based in Haridwar, Uttarakhand, India.
+> Premium Himalayan Trekking, Adventure Tours & Chardham Yatra Specialist | Based in Haridwar, Uttarakhand, India
 
 ## About
 
-Wander Peaks is a travel agency specializing in sacred Himalayan pilgrimages and adventure tours. With 10+ years of experience and 15,000+ happy travelers, we offer expertly curated packages for Chardham Yatra, Kedarnath, Badrinath, and other spiritual destinations in Uttarakhand.
+Wander Peaks is a leading adventure travel agency specializing in Himalayan treks, high-altitude expeditions, and sacred pilgrimages. With 10+ years of experience and 15,000+ happy travelers, we offer expertly guided adventures for trekkers, pilgrims, and nature enthusiasts exploring Uttarakhand's majestic landscapes.
+
+**What We Offer:**
+- High-altitude Himalayan treks (Tungnath, Chopta, Kedarnath)
+- Sacred pilgrimage packages (Chardham, Do Dham, Panch Kedar)
+- Adventure expeditions with experienced mountain guides
+- Camping and wildlife experiences in Uttarakhand
 
 ## Contact
 
@@ -15,38 +21,69 @@ Wander Peaks is a travel agency specializing in sacred Himalayan pilgrimages and
 
 ## Main Pages
 
-- [Home](https://wanderpeaks.com/): Main landing page with featured packages and destinations
+- [Home](https://wanderpeaks.com/): Featured treks, packages, and destinations
 - [Packages](https://wanderpeaks.com/packages.html): All tour packages with pricing
-- [Destinations](https://wanderpeaks.com/destinations.html): Explore Uttarakhand destinations
-- [Services](https://wanderpeaks.com/services.html): Our travel services
+- [Destinations](https://wanderpeaks.com/destinations.html): Explore Uttarakhand trekking destinations
+- [Services](https://wanderpeaks.com/services.html): Our travel and adventure services
 - [About Us](https://wanderpeaks.com/about.html): Company history and mission
 - [Contact](https://wanderpeaks.com/contact.html): Get in touch with us
+
+## Adventure Trekking Destinations
+
+### Popular Treks
+- **Tungnath Trek**: World's highest Shiva temple at 3,680m, scenic meadows
+- **Chopta Trek**: "Mini Switzerland of India", stunning Himalayan views
+- **Deoria Tal Trek**: Pristine lake reflecting Chaukhamba peaks
+- **Kedarnath Trek**: 16km spiritual trek through alpine terrain
+- **Valley of Flowers**: UNESCO World Heritage Site, 600+ flower species
+
+### Adventure Hotspots
+- **Auli**: Skiing, cable car, panoramic Nanda Devi views
+- **Rishikesh**: River rafting, bungee jumping, camping by Ganges
+- **Chopta-Tungnath**: Beginner-friendly Himalayan trek
+- **Har Ki Dun**: Remote valley trek, ancient villages
 
 ## Yatra (Pilgrimage) Pages
 
 ### Ek Dham & Do Dham
-- [Kedarnath Yatra](https://wanderpeaks.com/yatras/kedarnath.html): Sacred journey to Lord Shiva's abode at 3,583m
-- [Badrinath Yatra](https://wanderpeaks.com/yatras/badrinath.html): Visit the holy shrine of Lord Vishnu
-- [Do Dham Yatra](https://wanderpeaks.com/yatras/do-dham.html): Combined Kedarnath and Badrinath pilgrimage
+- [Kedarnath Yatra](https://wanderpeaks.com/yatras/kedarnath.html): Trek to Lord Shiva's abode at 3,583m
+- [Badrinath Yatra](https://wanderpeaks.com/yatras/badrinath.html): Holy shrine of Lord Vishnu
+- [Do Dham Yatra](https://wanderpeaks.com/yatras/do-dham.html): Kedarnath + Badrinath combined
 
 ### Char Dham
-- [Char Dham Yatra](https://wanderpeaks.com/yatras/char-dham.html): Complete four-temple circuit (Yamunotri, Gangotri, Kedarnath, Badrinath)
+- [Char Dham Yatra](https://wanderpeaks.com/yatras/char-dham.html): Complete four-temple circuit
 - [Char Dham by Helicopter](https://wanderpeaks.com/yatras/char-dham-helicopter.html): Premium helicopter pilgrimage
 
 ### Panch Kedar & Panch Badri
-- [Panch Kedar](https://wanderpeaks.com/yatras/panch-kedar.html): Five sacred Shiva temples in Garhwal
-- [Panch Badri](https://wanderpeaks.com/yatras/panch-badri.html): Five Vishnu temples in Uttarakhand
+- [Panch Kedar](https://wanderpeaks.com/yatras/panch-kedar.html): Five sacred Shiva temples trek
+- [Panch Badri](https://wanderpeaks.com/yatras/panch-badri.html): Five Vishnu temples circuit
 - [Panch Prayag](https://wanderpeaks.com/yatras/panch-prayag.html): Five sacred river confluences
 
 ## Key Topics
 
-- Chardham Yatra packages and itineraries
-- Kedarnath temple trek and darshan
+### Adventure & Trekking
+- Himalayan trekking packages
+- Best treks in Uttarakhand
+- Tungnath Chandrashila trek
+- Chopta camping and trekking
+- Valley of Flowers trek
+- Beginner treks in India
+- High altitude expeditions
+- Adventure sports in Rishikesh
+- Skiing in Auli
+
+### Pilgrimage & Spiritual
+- Chardham Yatra packages
+- Kedarnath temple trek
 - Badrinath temple visit
-- Helicopter services to Char Dham
-- Uttarakhand pilgrimage planning
-- Himalayan spiritual tourism
-- Do Dham, Panch Kedar, Panch Badri circuits
+- Do Dham pilgrimage
+- Panch Kedar circuit
+
+### Planning & Logistics
+- Best time to visit Uttarakhand (May-June, Sep-Oct)
+- Trekking gear checklist
+- Altitude sickness prevention
+- Helicopter booking for Char Dham
 
 ## Sitemap
 
