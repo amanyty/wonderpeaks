@@ -1521,8 +1521,9 @@ ul {
     height: auto;
     display: block;
     margin: 0 auto;
-    object-fit: contain;
-    /* Removed border-radius and shadow to prevent clipping of logo content */
+    object-fit: cover;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
 }
 
 /* Mission Section */
