@@ -1494,7 +1494,7 @@ ul {
 
 .about-intro {
     display: grid;
-    grid-template-columns: 1fr 350px;
+    grid-template-columns: 1.2fr 0.8fr;
     gap: 60px;
     align-items: center;
 }
@@ -1517,10 +1517,12 @@ ul {
 
 .about-logo-img {
     width: 100%;
+    max-width: 400px;
     height: auto;
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-lg);
+    display: block;
+    margin: 0 auto;
     object-fit: contain;
+    /* Removed border-radius and shadow to prevent clipping of logo content */
 }
 
 /* Mission Section */
