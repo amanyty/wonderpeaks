@@ -147,6 +147,7 @@ function navigateTo(section) {
         packages: 'Destination Packages',
         destinations: 'Destinations',
         services: 'Services',
+        yatras: 'Yatras',
         'site-settings': 'Site Settings'
     };
     document.getElementById('sectionTitle').textContent = titles[section] || 'Dashboard';
@@ -163,6 +164,7 @@ function navigateTo(section) {
         case 'packages': loadPackages(); break;
         case 'destinations': loadDestinations(); break;
         case 'services': loadServicesList(); break;
+        case 'yatras': loadYatras(); break;
         case 'site-settings': loadSiteSettings(); break;
     }
 
@@ -179,12 +181,13 @@ function toggleMobileSidebar() {
 // ---- DASHBOARD ----
 async function loadDashboard() {
     try {
-        const [enquiriesRes, testimonialsRes, packagesRes, destinationsRes, servicesRes] = await Promise.all([
+        const [enquiriesRes, testimonialsRes, packagesRes, destinationsRes, servicesRes, yatrasRes] = await Promise.all([
             supabaseClient.from('enquiries').select('*', { count: 'exact' }),
             supabaseClient.from('testimonials').select('*', { count: 'exact' }),
             supabaseClient.from('packages').select('*', { count: 'exact' }),
             supabaseClient.from('destinations').select('*', { count: 'exact' }),
-            supabaseClient.from('services').select('*', { count: 'exact' })
+            supabaseClient.from('services').select('*', { count: 'exact' }),
+            supabaseClient.from('yatras').select('*', { count: 'exact' })
         ]);
 
         const enquiries = enquiriesRes.data || [];
@@ -195,6 +198,7 @@ async function loadDashboard() {
         document.getElementById('statPackages').textContent = (packagesRes.data || []).length;
         document.getElementById('statDestinations').textContent = (destinationsRes.data || []).length;
         document.getElementById('statServices').textContent = (servicesRes.data || []).length;
+        document.getElementById('statYatras').textContent = (yatrasRes.data || []).length;
 
         // Update nav badge
         const badge = document.getElementById('enquiriesBadge');
@@ -1132,6 +1136,147 @@ async function saveSettings(e, group) {
         showToast(`${group === 'about' ? 'About' : 'Contact'} settings saved!`, 'success');
     } catch (err) {
         console.error('Save settings error:', err);
+        showToast('Error: ' + err.message, 'error');
+    }
+}
+
+// ======== YATRAS CRUD ========
+
+let editingYatraId = null;
+
+async function loadYatras() {
+    try {
+        const { data, error } = await supabaseClient
+            .from('yatras')
+            .select('*')
+            .order('sort_order', { ascending: true });
+        if (error) throw error;
+
+        const tbody = document.getElementById('yatrasTableBody');
+        const empty = document.getElementById('yatrasEmpty');
+
+        if (!data || data.length === 0) {
+            tbody.innerHTML = '';
+            empty.style.display = 'block';
+            return;
+        }
+        empty.style.display = 'none';
+
+        tbody.innerHTML = data.map(y => `
+            <tr>
+                <td>
+                    <div style="display:flex;align-items:center;gap:12px">
+                        ${y.image_url ? `<img src="${y.image_url}" style="width:48px;height:48px;border-radius:8px;object-fit:cover" onerror="this.style.display='none'">` : ''}
+                        <div>
+                            <strong>${escapeHtml(y.title)}</strong>
+                            ${y.subtitle ? `<div style="font-size:12px;color:var(--admin-text-secondary)">${escapeHtml(y.subtitle)}</div>` : ''}
+                            ${y.badge ? `<span class="status-badge status-active" style="font-size:10px;margin-top:4px">${escapeHtml(y.badge)}</span>` : ''}
+                        </div>
+                    </div>
+                </td>
+                <td>${escapeHtml(y.duration || '—')}</td>
+                <td>${escapeHtml(y.price || '—')}</td>
+                <td><span class="status-badge ${y.is_active ? 'status-active' : 'status-inactive'}">${y.is_active ? 'Active' : 'Hidden'}</span></td>
+                <td>
+                    <div class="action-buttons">
+                        <button class="btn-admin btn-admin-sm btn-admin-outline" onclick="openYatraModal('${y.id}')"><i class="fas fa-edit"></i></button>
+                        <button class="btn-admin btn-admin-sm btn-admin-danger" onclick="deleteYatra('${y.id}','${escapeHtml(y.title)}')"><i class="fas fa-trash"></i></button>
+                    </div>
+                </td>
+            </tr>
+        `).join('');
+    } catch (err) {
+        console.error('Load yatras error:', err);
+        showToast('Error loading yatras', 'error');
+    }
+}
+
+async function openYatraModal(id) {
+    editingYatraId = id || null;
+    const modal = document.getElementById('yatraFormModal');
+    const title = modal.querySelector('.modal-header h3');
+
+    if (id) {
+        title.textContent = 'Edit Yatra';
+        const { data } = await supabaseClient.from('yatras').select('*').eq('id', id).single();
+        if (data) {
+            document.getElementById('yTitle').value = data.title;
+            document.getElementById('ySubtitle').value = data.subtitle || '';
+            document.getElementById('yDescription').value = data.description;
+            document.getElementById('yDuration').value = data.duration || '';
+            document.getElementById('yPrice').value = data.price || '';
+            document.getElementById('yBadge').value = data.badge || '';
+            document.getElementById('yIcon').value = data.icon || '';
+            document.getElementById('yImageUrl').value = data.image_url || '';
+            document.getElementById('yLinkUrl').value = data.link_url || '';
+            document.getElementById('ySortOrder').value = data.sort_order || 0;
+            document.getElementById('yActive').checked = data.is_active;
+            const preview = document.getElementById('yatraImgPreview');
+            if (data.image_url) { preview.src = data.image_url; preview.classList.add('visible'); }
+        }
+    } else {
+        title.textContent = 'Add Yatra';
+        document.getElementById('yatraForm').reset();
+        document.getElementById('yActive').checked = true;
+        const preview = document.getElementById('yatraImgPreview');
+        preview.classList.remove('visible');
+        const fileInput = document.getElementById('yImageFile');
+        if (fileInput) fileInput.value = '';
+        const status = document.getElementById('yatraUploadStatus');
+        if (status) { status.className = 'upload-status'; status.textContent = ''; }
+    }
+    modal.classList.add('active');
+}
+
+async function saveYatra(e) {
+    e.preventDefault();
+
+    const fileInput = document.getElementById('yImageFile');
+    if (fileInput && fileInput.files.length > 0) {
+        const url = await uploadFileToStorage(fileInput.files[0], 'yatras', 'yatraUploadStatus');
+        if (url) document.getElementById('yImageUrl').value = url;
+    }
+
+    const yatra = {
+        title: document.getElementById('yTitle').value,
+        subtitle: document.getElementById('ySubtitle').value || null,
+        description: document.getElementById('yDescription').value,
+        duration: document.getElementById('yDuration').value || null,
+        price: document.getElementById('yPrice').value || null,
+        badge: document.getElementById('yBadge').value || null,
+        icon: document.getElementById('yIcon').value || 'fas fa-om',
+        image_url: document.getElementById('yImageUrl').value || null,
+        link_url: document.getElementById('yLinkUrl').value || null,
+        sort_order: parseInt(document.getElementById('ySortOrder').value) || 0,
+        is_active: document.getElementById('yActive').checked
+    };
+
+    try {
+        if (editingYatraId) {
+            const { error } = await supabaseClient.from('yatras').update(yatra).eq('id', editingYatraId);
+            if (error) throw error;
+            showToast('Yatra updated!', 'success');
+        } else {
+            const { error } = await supabaseClient.from('yatras').insert(yatra);
+            if (error) throw error;
+            showToast('Yatra added!', 'success');
+        }
+        closeAllModals();
+        loadYatras();
+    } catch (err) {
+        console.error('Save yatra error:', err);
+        showToast('Error: ' + err.message, 'error');
+    }
+}
+
+async function deleteYatra(id, title) {
+    if (!confirm(`Delete "${title}"? This cannot be undone.`)) return;
+    try {
+        const { error } = await supabaseClient.from('yatras').delete().eq('id', id);
+        if (error) throw error;
+        showToast('Yatra deleted', 'success');
+        loadYatras();
+    } catch (err) {
         showToast('Error: ' + err.message, 'error');
     }
 }

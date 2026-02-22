@@ -73,6 +73,9 @@
                 <a class="nav-item" data-section="packages">
                     <i class="fas fa-suitcase"></i> Packages
                 </a>
+                <a class="nav-item" data-section="yatras">
+                    <i class="fas fa-om"></i> Yatras
+                </a>
                 <a class="nav-item" data-section="destinations">
                     <i class="fas fa-map-marked-alt"></i> Destinations
                 </a>
@@ -139,6 +142,14 @@
                         </div>
                         <div class="stat-card">
                             <div class="stat-card-header">
+                                <div class="stat-icon" style="background:rgba(245,158,11,0.1);color:#f59e0b"><i
+                                        class="fas fa-om"></i></div>
+                            </div>
+                            <div class="stat-value" id="statYatras">0</div>
+                            <div class="stat-label">Yatras</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-card-header">
                                 <div class="stat-icon" style="background:rgba(168,85,247,0.1);color:#a855f7"><i
                                         class="fas fa-map-marked-alt"></i></div>
                             </div>
@@ -170,6 +181,9 @@
                             </button>
                             <button class="btn-admin btn-admin-outline" onclick="navigateTo('packages')">
                                 <i class="fas fa-suitcase"></i> Packages
+                            </button>
+                            <button class="btn-admin btn-admin-outline" onclick="navigateTo('yatras')">
+                                <i class="fas fa-om"></i> Yatras
                             </button>
                             <button class="btn-admin btn-admin-outline" onclick="navigateTo('destinations')">
                                 <i class="fas fa-map-marked-alt"></i> Destinations
@@ -290,6 +304,39 @@
                         <button class="btn-admin btn-admin-primary" onclick="openPackageModal()">
                             <i class="fas fa-plus"></i> Add First Package
                         </button>
+                    </div>
+                </div>
+
+                <!-- ======== YATRAS SECTION ======== -->
+                <div class="data-section" id="section-yatras">
+                    <div class="section-toolbar">
+                        <h2>Yatras</h2>
+                        <div class="toolbar-actions">
+                            <input type="text" class="search-input" placeholder="Search yatras..."
+                                oninput="searchTable('yatrasTableBody', this.value)">
+                            <button class="btn-admin btn-admin-primary" onclick="openYatraModal()">
+                                <i class="fas fa-plus"></i> Add Yatra
+                            </button>
+                        </div>
+                    </div>
+                    <div class="data-table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Yatra</th>
+                                    <th>Duration</th>
+                                    <th>Price</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="yatrasTableBody"></tbody>
+                        </table>
+                    </div>
+                    <div class="empty-state" id="yatrasEmpty" style="display:none">
+                        <i class="fas fa-om"></i>
+                        <h3>No yatras yet</h3>
+                        <p>Add yatras to show on your website</p>
                     </div>
                 </div>
 
@@ -958,6 +1005,95 @@
             </form>
         </div>
     </div>
+
+    <!-- ======== YATRA MODAL ======== -->
+    <div class="modal-overlay" id="yatraFormModal">
+        <div class="modal">
+            <form id="yatraForm" onsubmit="saveYatra(event)" class="modal-form">
+                <div class="modal-header">
+                    <h3>Add Yatra</h3>
+                    <button type="button" class="modal-close" onclick="closeAllModals()">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Yatra Title *</label>
+                            <input type="text" id="yTitle" required placeholder="Kedarnath Yatra">
+                        </div>
+                        <div class="form-group">
+                            <label>Subtitle</label>
+                            <input type="text" id="ySubtitle" placeholder="Sacred Jyotirlinga Trek">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Description *</label>
+                        <textarea id="yDescription" required rows="3"
+                            placeholder="Description of the yatra..."></textarea>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Duration</label>
+                            <input type="text" id="yDuration" placeholder="5 Days / 4 Nights">
+                        </div>
+                        <div class="form-group">
+                            <label>Starting Price</label>
+                            <input type="text" id="yPrice" placeholder="₹8,999">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Badge (optional)</label>
+                            <input type="text" id="yBadge" placeholder="Most Popular">
+                        </div>
+                        <div class="form-group">
+                            <label>Icon (Font Awesome)</label>
+                            <input type="text" id="yIcon" placeholder="fas fa-om">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Yatra Image</label>
+                        <div class="upload-zone">
+                            <input type="file" id="yImageFile" accept="image/*" class="file-input"
+                                onchange="previewUpload(this, 'yatraImgPreview', 'yImageUrl')">
+                            <div class="upload-placeholder">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <span>Click to upload image</span>
+                                <small>JPG, PNG, WebP — Max 5MB</small>
+                            </div>
+                            <img class="image-preview" id="yatraImgPreview" alt="Preview">
+                        </div>
+                        <div class="upload-or">— or paste image URL —</div>
+                        <input type="url" id="yImageUrl" class="img-url-input"
+                            placeholder="https://example.com/image.jpg">
+                        <div class="upload-status" id="yatraUploadStatus"></div>
+                    </div>
+                    <div class="form-group">
+                        <label>Link URL (page for this yatra)</label>
+                        <input type="text" id="yLinkUrl" placeholder="yatras/kedarnath.html">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Sort Order</label>
+                            <input type="number" id="ySortOrder" value="0">
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="yActive" checked style="width:auto;margin-right:8px">
+                                Active
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-admin btn-admin-outline" onclick="closeAllModals()">Cancel</button>
+                    <button type="submit" class="btn-admin btn-admin-primary">
+                        <i class="fas fa-save"></i> Save Yatra
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="admin.js"></script>
     <script>

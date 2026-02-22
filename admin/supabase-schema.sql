@@ -180,3 +180,28 @@ INSERT INTO site_settings (key, value) VALUES
     ('social_instagram', 'https://www.instagram.com/utt.arakhandchardhamyatra'),
     ('contact_map_embed', '')
 ON CONFLICT (key) DO NOTHING;
+
+-- ================================================
+-- 12. Yatras Table
+-- ================================================
+CREATE TABLE IF NOT EXISTS yatras (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    title TEXT NOT NULL,
+    subtitle TEXT,
+    description TEXT NOT NULL,
+    image_url TEXT,
+    link_url TEXT,
+    duration TEXT,
+    price TEXT,
+    badge TEXT,
+    icon TEXT DEFAULT 'fas fa-om',
+    is_active BOOLEAN DEFAULT TRUE,
+    sort_order INTEGER DEFAULT 0,
+    created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+ALTER TABLE yatras ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Public can read active yatras" ON yatras
+    FOR SELECT USING (is_active = true);
+CREATE POLICY "Admin full access to yatras" ON yatras
+    FOR ALL USING (true) WITH CHECK (true);
