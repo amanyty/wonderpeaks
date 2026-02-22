@@ -144,7 +144,10 @@ function navigateTo(section) {
         dashboard: 'Dashboard',
         enquiries: 'Contact Enquiries',
         testimonials: 'Testimonials',
-        packages: 'Destination Packages'
+        packages: 'Destination Packages',
+        destinations: 'Destinations',
+        services: 'Services',
+        'site-settings': 'Site Settings'
     };
     document.getElementById('sectionTitle').textContent = titles[section] || 'Dashboard';
 
@@ -158,6 +161,9 @@ function navigateTo(section) {
         case 'enquiries': loadEnquiries(); break;
         case 'testimonials': loadTestimonials(); break;
         case 'packages': loadPackages(); break;
+        case 'destinations': loadDestinations(); break;
+        case 'services': loadServicesList(); break;
+        case 'site-settings': loadSiteSettings(); break;
     }
 
     // Close mobile sidebar
@@ -173,10 +179,12 @@ function toggleMobileSidebar() {
 // ---- DASHBOARD ----
 async function loadDashboard() {
     try {
-        const [enquiriesRes, testimonialsRes, packagesRes] = await Promise.all([
+        const [enquiriesRes, testimonialsRes, packagesRes, destinationsRes, servicesRes] = await Promise.all([
             supabaseClient.from('enquiries').select('*', { count: 'exact' }),
             supabaseClient.from('testimonials').select('*', { count: 'exact' }),
-            supabaseClient.from('packages').select('*', { count: 'exact' })
+            supabaseClient.from('packages').select('*', { count: 'exact' }),
+            supabaseClient.from('destinations').select('*', { count: 'exact' }),
+            supabaseClient.from('services').select('*', { count: 'exact' })
         ]);
 
         const enquiries = enquiriesRes.data || [];
@@ -185,7 +193,8 @@ async function loadDashboard() {
         document.getElementById('statEnquiries').textContent = enquiries.length;
         document.getElementById('statTestimonials').textContent = (testimonialsRes.data || []).length;
         document.getElementById('statPackages').textContent = (packagesRes.data || []).length;
-        document.getElementById('statNewEnquiries').textContent = newCount;
+        document.getElementById('statDestinations').textContent = (destinationsRes.data || []).length;
+        document.getElementById('statServices').textContent = (servicesRes.data || []).length;
 
         // Update nav badge
         const badge = document.getElementById('enquiriesBadge');
@@ -786,4 +795,343 @@ function formatDate(dateStr) {
         hour: '2-digit',
         minute: '2-digit'
     });
+}
+
+// ======== DESTINATIONS CRUD ========
+
+let editingDestinationId = null;
+
+async function loadDestinations() {
+    try {
+        const { data, error } = await supabaseClient
+            .from('destinations')
+            .select('*')
+            .order('sort_order', { ascending: true });
+        if (error) throw error;
+
+        const tbody = document.getElementById('destinationsTableBody');
+        const empty = document.getElementById('destinationsEmpty');
+
+        if (!data || data.length === 0) {
+            tbody.innerHTML = '';
+            empty.style.display = 'block';
+            return;
+        }
+        empty.style.display = 'none';
+
+        tbody.innerHTML = data.map(d => `
+            <tr>
+                <td>
+                    <div style="display:flex;align-items:center;gap:12px">
+                        ${d.image_url ? `<img src="${d.image_url}" style="width:48px;height:48px;border-radius:8px;object-fit:cover" onerror="this.style.display='none'">` : ''}
+                        <div>
+                            <strong>${escapeHtml(d.title)}</strong>
+                            <div style="font-size:12px;color:var(--admin-text-secondary)">${escapeHtml((d.description || '').substring(0, 60))}...</div>
+                        </div>
+                    </div>
+                </td>
+                <td>${escapeHtml(d.elevation || '—')}</td>
+                <td>${escapeHtml(d.best_time || '—')}</td>
+                <td><span class="status-badge ${d.is_active ? 'status-active' : 'status-inactive'}">${d.is_active ? 'Active' : 'Hidden'}</span></td>
+                <td>
+                    <div class="action-buttons">
+                        <button class="btn-admin btn-admin-sm btn-admin-outline" onclick="openDestinationModal('${d.id}')"><i class="fas fa-edit"></i></button>
+                        <button class="btn-admin btn-admin-sm btn-admin-danger" onclick="deleteDestination('${d.id}','${escapeHtml(d.title)}')"><i class="fas fa-trash"></i></button>
+                    </div>
+                </td>
+            </tr>
+        `).join('');
+    } catch (err) {
+        console.error('Load destinations error:', err);
+        showToast('Error loading destinations', 'error');
+    }
+}
+
+async function openDestinationModal(id) {
+    editingDestinationId = id || null;
+    const modal = document.getElementById('destinationFormModal');
+    const title = modal.querySelector('.modal-header h3');
+
+    if (id) {
+        title.textContent = 'Edit Destination';
+        const { data } = await supabaseClient.from('destinations').select('*').eq('id', id).single();
+        if (data) {
+            document.getElementById('dTitle').value = data.title;
+            document.getElementById('dDescription').value = data.description;
+            document.getElementById('dIcon').value = data.icon || '';
+            document.getElementById('dElevation').value = data.elevation || '';
+            document.getElementById('dBestTime').value = data.best_time || '';
+            document.getElementById('dDistance').value = data.distance || '';
+            document.getElementById('dImageUrl').value = data.image_url || '';
+            document.getElementById('dLinkUrl').value = data.link_url || '';
+            document.getElementById('dSortOrder').value = data.sort_order || 0;
+            document.getElementById('dActive').checked = data.is_active;
+            const preview = document.getElementById('destImgPreview');
+            if (data.image_url) { preview.src = data.image_url; preview.classList.add('visible'); }
+        }
+    } else {
+        title.textContent = 'Add Destination';
+        document.getElementById('destinationForm').reset();
+        document.getElementById('dActive').checked = true;
+        const preview = document.getElementById('destImgPreview');
+        preview.classList.remove('visible');
+        const fileInput = document.getElementById('dImageFile');
+        if (fileInput) fileInput.value = '';
+        const status = document.getElementById('destUploadStatus');
+        if (status) { status.className = 'upload-status'; status.textContent = ''; }
+    }
+    modal.classList.add('active');
+}
+
+async function saveDestination(e) {
+    e.preventDefault();
+
+    const fileInput = document.getElementById('dImageFile');
+    if (fileInput && fileInput.files.length > 0) {
+        const url = await uploadFileToStorage(fileInput.files[0], 'destinations', 'destUploadStatus');
+        if (url) document.getElementById('dImageUrl').value = url;
+    }
+
+    const dest = {
+        title: document.getElementById('dTitle').value,
+        description: document.getElementById('dDescription').value,
+        icon: document.getElementById('dIcon').value || 'fas fa-mountain',
+        elevation: document.getElementById('dElevation').value || null,
+        best_time: document.getElementById('dBestTime').value || null,
+        distance: document.getElementById('dDistance').value || null,
+        image_url: document.getElementById('dImageUrl').value || null,
+        link_url: document.getElementById('dLinkUrl').value || null,
+        sort_order: parseInt(document.getElementById('dSortOrder').value) || 0,
+        is_active: document.getElementById('dActive').checked
+    };
+
+    try {
+        if (editingDestinationId) {
+            const { error } = await supabaseClient.from('destinations').update(dest).eq('id', editingDestinationId);
+            if (error) throw error;
+            showToast('Destination updated!', 'success');
+        } else {
+            const { error } = await supabaseClient.from('destinations').insert(dest);
+            if (error) throw error;
+            showToast('Destination added!', 'success');
+        }
+        closeAllModals();
+        loadDestinations();
+    } catch (err) {
+        console.error('Save destination error:', err);
+        showToast('Error: ' + err.message, 'error');
+    }
+}
+
+async function deleteDestination(id, title) {
+    if (!confirm(`Delete "${title}"? This cannot be undone.`)) return;
+    try {
+        const { error } = await supabaseClient.from('destinations').delete().eq('id', id);
+        if (error) throw error;
+        showToast('Destination deleted', 'success');
+        loadDestinations();
+    } catch (err) {
+        showToast('Error: ' + err.message, 'error');
+    }
+}
+
+// ======== SERVICES CRUD ========
+
+let editingServiceId = null;
+let serviceFeatures = [];
+
+async function loadServicesList() {
+    try {
+        const { data, error } = await supabaseClient
+            .from('services')
+            .select('*')
+            .order('sort_order', { ascending: true });
+        if (error) throw error;
+
+        const tbody = document.getElementById('servicesTableBody');
+        const empty = document.getElementById('servicesEmpty');
+
+        if (!data || data.length === 0) {
+            tbody.innerHTML = '';
+            empty.style.display = 'block';
+            return;
+        }
+        empty.style.display = 'none';
+
+        tbody.innerHTML = data.map(s => `
+            <tr>
+                <td><strong>${escapeHtml(s.title)}</strong><div style="font-size:12px;color:var(--admin-text-secondary)">${escapeHtml((s.description || '').substring(0, 60))}...</div></td>
+                <td><i class="${escapeHtml(s.icon || 'fas fa-concierge-bell')}"></i> <span style="font-size:12px">${escapeHtml(s.icon || '')}</span></td>
+                <td>${(s.features || []).length} items</td>
+                <td><span class="status-badge ${s.is_active ? 'status-active' : 'status-inactive'}">${s.is_active ? 'Active' : 'Hidden'}</span></td>
+                <td>
+                    <div class="action-buttons">
+                        <button class="btn-admin btn-admin-sm btn-admin-outline" onclick="openServiceModal('${s.id}')"><i class="fas fa-edit"></i></button>
+                        <button class="btn-admin btn-admin-sm btn-admin-danger" onclick="deleteService('${s.id}','${escapeHtml(s.title)}')"><i class="fas fa-trash"></i></button>
+                    </div>
+                </td>
+            </tr>
+        `).join('');
+    } catch (err) {
+        console.error('Load services error:', err);
+        showToast('Error loading services', 'error');
+    }
+}
+
+async function openServiceModal(id) {
+    editingServiceId = id || null;
+    serviceFeatures = [];
+    const modal = document.getElementById('serviceFormModal');
+    const title = modal.querySelector('.modal-header h3');
+
+    if (id) {
+        title.textContent = 'Edit Service';
+        const { data } = await supabaseClient.from('services').select('*').eq('id', id).single();
+        if (data) {
+            document.getElementById('sTitle').value = data.title;
+            document.getElementById('sDescription').value = data.description;
+            document.getElementById('sIcon').value = data.icon || '';
+            document.getElementById('sImageUrl').value = data.image_url || '';
+            document.getElementById('sCtaText').value = data.cta_text || 'Enquire Now';
+            document.getElementById('sCtaUrl').value = data.cta_url || '';
+            document.getElementById('sSortOrder').value = data.sort_order || 0;
+            document.getElementById('sActive').checked = data.is_active;
+            serviceFeatures = data.features || [];
+            const preview = document.getElementById('serviceImgPreview');
+            if (data.image_url) { preview.src = data.image_url; preview.classList.add('visible'); }
+        }
+    } else {
+        title.textContent = 'Add Service';
+        document.getElementById('serviceForm').reset();
+        document.getElementById('sActive').checked = true;
+        serviceFeatures = [];
+        const preview = document.getElementById('serviceImgPreview');
+        preview.classList.remove('visible');
+        const fileInput = document.getElementById('sImageFile');
+        if (fileInput) fileInput.value = '';
+        const status = document.getElementById('serviceUploadStatus');
+        if (status) { status.className = 'upload-status'; status.textContent = ''; }
+    }
+    renderServiceFeatures();
+    modal.classList.add('active');
+}
+
+function addServiceFeature() {
+    const input = document.getElementById('serviceFeatureInput');
+    const val = input.value.trim();
+    if (val) {
+        serviceFeatures.push(val);
+        input.value = '';
+        renderServiceFeatures();
+    }
+}
+
+function removeServiceFeature(index) {
+    serviceFeatures.splice(index, 1);
+    renderServiceFeatures();
+}
+
+function renderServiceFeatures() {
+    const list = document.getElementById('serviceFeaturesList');
+    list.innerHTML = serviceFeatures.map((f, i) => `
+        <li>${escapeHtml(f)} <button type="button" onclick="removeServiceFeature(${i})" style="background:none;border:none;color:#ef4444;cursor:pointer;font-size:14px"><i class="fas fa-times"></i></button></li>
+    `).join('');
+}
+
+async function saveService(e) {
+    e.preventDefault();
+
+    const fileInput = document.getElementById('sImageFile');
+    if (fileInput && fileInput.files.length > 0) {
+        const url = await uploadFileToStorage(fileInput.files[0], 'services', 'serviceUploadStatus');
+        if (url) document.getElementById('sImageUrl').value = url;
+    }
+
+    const svc = {
+        title: document.getElementById('sTitle').value,
+        description: document.getElementById('sDescription').value,
+        icon: document.getElementById('sIcon').value || 'fas fa-concierge-bell',
+        image_url: document.getElementById('sImageUrl').value || null,
+        features: serviceFeatures,
+        cta_text: document.getElementById('sCtaText').value || 'Enquire Now',
+        cta_url: document.getElementById('sCtaUrl').value || null,
+        sort_order: parseInt(document.getElementById('sSortOrder').value) || 0,
+        is_active: document.getElementById('sActive').checked
+    };
+
+    try {
+        if (editingServiceId) {
+            const { error } = await supabaseClient.from('services').update(svc).eq('id', editingServiceId);
+            if (error) throw error;
+            showToast('Service updated!', 'success');
+        } else {
+            const { error } = await supabaseClient.from('services').insert(svc);
+            if (error) throw error;
+            showToast('Service added!', 'success');
+        }
+        closeAllModals();
+        loadServicesList();
+    } catch (err) {
+        console.error('Save service error:', err);
+        showToast('Error: ' + err.message, 'error');
+    }
+}
+
+async function deleteService(id, title) {
+    if (!confirm(`Delete "${title}"? This cannot be undone.`)) return;
+    try {
+        const { error } = await supabaseClient.from('services').delete().eq('id', id);
+        if (error) throw error;
+        showToast('Service deleted', 'success');
+        loadServicesList();
+    } catch (err) {
+        showToast('Error: ' + err.message, 'error');
+    }
+}
+
+// ======== SITE SETTINGS ========
+
+async function loadSiteSettings() {
+    try {
+        const { data, error } = await supabaseClient.from('site_settings').select('*');
+        if (error) throw error;
+        if (!data) return;
+
+        data.forEach(setting => {
+            const el = document.getElementById('set_' + setting.key);
+            if (el) {
+                if (el.tagName === 'TEXTAREA') el.value = setting.value;
+                else el.value = setting.value;
+            }
+        });
+    } catch (err) {
+        console.error('Load settings error:', err);
+        showToast('Error loading settings', 'error');
+    }
+}
+
+async function saveSettings(e, group) {
+    e.preventDefault();
+
+    const settingsKeys = group === 'about'
+        ? ['about_description', 'about_mission', 'about_vision', 'about_experience_years', 'about_customers_served', 'about_tours_completed', 'about_team_members']
+        : ['contact_address', 'contact_phone', 'contact_email', 'contact_whatsapp', 'social_facebook', 'social_instagram'];
+
+    try {
+        for (const key of settingsKeys) {
+            const el = document.getElementById('set_' + key);
+            if (!el) continue;
+            const value = el.value.trim();
+            if (!value) continue;
+
+            const { error } = await supabaseClient
+                .from('site_settings')
+                .upsert({ key, value, updated_at: new Date().toISOString() }, { onConflict: 'key' });
+            if (error) throw error;
+        }
+        showToast(`${group === 'about' ? 'About' : 'Contact'} settings saved!`, 'success');
+    } catch (err) {
+        console.error('Save settings error:', err);
+        showToast('Error: ' + err.message, 'error');
+    }
 }

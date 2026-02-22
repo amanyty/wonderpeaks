@@ -227,6 +227,8 @@
                     <a href="contact.html" class="btn btn-outline">Check Availability</a>
                 </div>
             </div>
+            <!-- Dynamic services from admin panel -->
+            <div class="services-grid" id="dynamicServicesContainer"></div>
         </div>
     </section>
 
@@ -403,6 +405,41 @@
     </footer>
 
     <script src="js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        (function () {
+            const sb = window.supabase.createClient(
+                'https://fcxatqillzskuqyaubws.supabase.co',
+                'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZjeGF0cWlsbHpza3VxeWF1YndzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE3NDQ1MzksImV4cCI6MjA4NzMyMDUzOX0.ZtaN4zzqi93Ha_x1jnGvk8z72lnD6A41asIuxvLE4II'
+            );
+            function esc(t) { if (!t) return ''; const d = document.createElement('div'); d.textContent = t; return d.innerHTML; }
+
+            async function loadDynamicServices() {
+                try {
+                    const { data } = await sb.from('services').select('*').eq('is_active', true).order('sort_order');
+                    if (!data || !data.length) return;
+                    const c = document.getElementById('dynamicServicesContainer');
+                    c.innerHTML = data.map(s => {
+                        const features = (s.features || []).map(f =>
+                            `<li><i class="fas fa-check"></i> ${esc(f)}</li>`
+                        ).join('');
+                        return `
+                            <div class="service-card">
+                                <div class="service-icon">
+                                    <i class="${esc(s.icon || 'fas fa-concierge-bell')}"></i>
+                                </div>
+                                <h3>${esc(s.title)}</h3>
+                                <p>${esc(s.description)}</p>
+                                ${features ? `<ul class="service-features">${features}</ul>` : ''}
+                                ${s.cta_url ? `<a href="${esc(s.cta_url)}" class="btn btn-outline" ${s.cta_url.startsWith('http') ? 'target="_blank"' : ''}>${esc(s.cta_text || 'Enquire Now')}</a>` : ''}
+                            </div>
+                        `;
+                    }).join('');
+                } catch (e) { console.error(e); }
+            }
+            document.addEventListener('DOMContentLoaded', loadDynamicServices);
+        })();
+    </script>
 </body>
 
 </html>

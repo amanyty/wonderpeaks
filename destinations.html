@@ -498,6 +498,8 @@
                     </div>
                 </div>
             </div>
+            <!-- Dynamic destinations from admin panel -->
+            <div class="dest-grid" id="dynamicDestinationsContainer"></div>
         </div>
     </section>
 
@@ -589,6 +591,43 @@
     </footer>
 
     <script src="js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        (function () {
+            const sb = window.supabase.createClient(
+                'https://fcxatqillzskuqyaubws.supabase.co',
+                'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZjeGF0cWlsbHpza3VxeWF1YndzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE3NDQ1MzksImV4cCI6MjA4NzMyMDUzOX0.ZtaN4zzqi93Ha_x1jnGvk8z72lnD6A41asIuxvLE4II'
+            );
+            function esc(t) { if (!t) return ''; const d = document.createElement('div'); d.textContent = t; return d.innerHTML; }
+
+            async function loadDynamicDestinations() {
+                try {
+                    const { data } = await sb.from('destinations').select('*').eq('is_active', true).order('sort_order');
+                    if (!data || !data.length) return;
+                    const c = document.getElementById('dynamicDestinationsContainer');
+                    c.innerHTML = data.map(d => `
+                        <div class="dest-card">
+                            <div class="dest-image">
+                                <img src="${d.image_url || 'images/kedarnath.jpg'}" alt="${esc(d.title)}" onerror="this.src='images/kedarnath.jpg'">
+                            </div>
+                            <div class="dest-content">
+                                <h3>${esc(d.title)}</h3>
+                                ${d.elevation ? `<p class="dest-subtitle">${esc(d.elevation)}</p>` : ''}
+                                <p class="dest-description">${esc(d.description)}</p>
+                                <div class="dest-info">
+                                    ${d.elevation ? `<span><i class="fas fa-mountain"></i> ${esc(d.elevation)}</span>` : ''}
+                                    ${d.best_time ? `<span><i class="fas fa-calendar"></i> ${esc(d.best_time)}</span>` : ''}
+                                    ${d.distance ? `<span><i class="fas fa-road"></i> ${esc(d.distance)}</span>` : ''}
+                                </div>
+                                ${d.link_url ? `<a href="${esc(d.link_url)}" class="btn btn-outline">View Yatra</a>` : ''}
+                            </div>
+                        </div>
+                    `).join('');
+                } catch (e) { console.error(e); }
+            }
+            document.addEventListener('DOMContentLoaded', loadDynamicDestinations);
+        })();
+    </script>
 </body>
 
 </html>

@@ -73,6 +73,17 @@
                 <a class="nav-item" data-section="packages">
                     <i class="fas fa-suitcase"></i> Packages
                 </a>
+                <a class="nav-item" data-section="destinations">
+                    <i class="fas fa-map-marked-alt"></i> Destinations
+                </a>
+                <a class="nav-item" data-section="services">
+                    <i class="fas fa-concierge-bell"></i> Services
+                </a>
+
+                <div class="sidebar-nav-label">Settings</div>
+                <a class="nav-item" data-section="site-settings">
+                    <i class="fas fa-cog"></i> Site Settings
+                </a>
             </nav>
             <div class="sidebar-footer">
                 <a class="nav-item" href="../index.html" target="_blank">
@@ -110,14 +121,7 @@
                                 <div class="stat-icon enquiries"><i class="fas fa-envelope"></i></div>
                             </div>
                             <div class="stat-value" id="statEnquiries">0</div>
-                            <div class="stat-label">Total Enquiries</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-card-header">
-                                <div class="stat-icon new-enquiries"><i class="fas fa-bell"></i></div>
-                            </div>
-                            <div class="stat-value" id="statNewEnquiries">0</div>
-                            <div class="stat-label">New Enquiries</div>
+                            <div class="stat-label">Enquiries</div>
                         </div>
                         <div class="stat-card">
                             <div class="stat-card-header">
@@ -133,23 +137,48 @@
                             <div class="stat-value" id="statPackages">0</div>
                             <div class="stat-label">Packages</div>
                         </div>
+                        <div class="stat-card">
+                            <div class="stat-card-header">
+                                <div class="stat-icon" style="background:rgba(168,85,247,0.1);color:#a855f7"><i
+                                        class="fas fa-map-marked-alt"></i></div>
+                            </div>
+                            <div class="stat-value" id="statDestinations">0</div>
+                            <div class="stat-label">Destinations</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-card-header">
+                                <div class="stat-icon" style="background:rgba(6,182,212,0.1);color:#06b6d4"><i
+                                        class="fas fa-concierge-bell"></i></div>
+                            </div>
+                            <div class="stat-value" id="statServices">0</div>
+                            <div class="stat-label">Services</div>
+                        </div>
                     </div>
 
                     <div
                         style="background:var(--admin-surface);border:1px solid var(--admin-border);border-radius:var(--admin-radius);padding:32px;text-align:center">
                         <h3 style="margin-bottom:8px">Welcome to WanderPeaks Admin</h3>
                         <p style="color:var(--admin-text-secondary);font-size:14px;max-width:500px;margin:0 auto 24px">
-                            Manage your contact enquiries, customer testimonials, and destination packages from here.
+                            Manage your entire website content from here.
                         </p>
                         <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
                             <button class="btn-admin btn-admin-primary" onclick="navigateTo('enquiries')">
-                                <i class="fas fa-envelope"></i> View Enquiries
+                                <i class="fas fa-envelope"></i> Enquiries
                             </button>
                             <button class="btn-admin btn-admin-outline" onclick="navigateTo('testimonials')">
-                                <i class="fas fa-star"></i> Manage Testimonials
+                                <i class="fas fa-star"></i> Testimonials
                             </button>
                             <button class="btn-admin btn-admin-outline" onclick="navigateTo('packages')">
-                                <i class="fas fa-suitcase"></i> Manage Packages
+                                <i class="fas fa-suitcase"></i> Packages
+                            </button>
+                            <button class="btn-admin btn-admin-outline" onclick="navigateTo('destinations')">
+                                <i class="fas fa-map-marked-alt"></i> Destinations
+                            </button>
+                            <button class="btn-admin btn-admin-outline" onclick="navigateTo('services')">
+                                <i class="fas fa-concierge-bell"></i> Services
+                            </button>
+                            <button class="btn-admin btn-admin-outline" onclick="navigateTo('site-settings')">
+                                <i class="fas fa-cog"></i> Site Settings
                             </button>
                         </div>
                     </div>
@@ -442,7 +471,335 @@
         </div>
     </div>
 
-    <!-- Supabase JS Client CDN -->
+    <!-- ======== DESTINATIONS SECTION ======== -->
+    <div class="data-section" id="section-destinations">
+        <div class="section-toolbar">
+            <h2>Destinations</h2>
+            <div class="toolbar-actions">
+                <input type="text" class="search-input" placeholder="Search destinations..."
+                    oninput="searchTable('destinationsTableBody', this.value)">
+                <button class="btn-admin btn-admin-primary" onclick="openDestinationModal()">
+                    <i class="fas fa-plus"></i> Add Destination
+                </button>
+            </div>
+        </div>
+        <div class="data-table-container">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Destination</th>
+                        <th>Elevation</th>
+                        <th>Best Time</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="destinationsTableBody"></tbody>
+            </table>
+        </div>
+        <div class="empty-state" id="destinationsEmpty" style="display:none">
+            <i class="fas fa-map-marked-alt"></i>
+            <h3>No destinations yet</h3>
+            <p>Add destinations to show on your website</p>
+        </div>
+    </div>
+
+    <!-- ======== SERVICES SECTION ======== -->
+    <div class="data-section" id="section-services">
+        <div class="section-toolbar">
+            <h2>Services</h2>
+            <div class="toolbar-actions">
+                <input type="text" class="search-input" placeholder="Search services..."
+                    oninput="searchTable('servicesTableBody', this.value)">
+                <button class="btn-admin btn-admin-primary" onclick="openServiceModal()">
+                    <i class="fas fa-plus"></i> Add Service
+                </button>
+            </div>
+        </div>
+        <div class="data-table-container">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Service</th>
+                        <th>Icon</th>
+                        <th>Features</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="servicesTableBody"></tbody>
+            </table>
+        </div>
+        <div class="empty-state" id="servicesEmpty" style="display:none">
+            <i class="fas fa-concierge-bell"></i>
+            <h3>No services yet</h3>
+            <p>Add services to show on your website</p>
+        </div>
+    </div>
+
+    <!-- ======== SITE SETTINGS ======== -->
+    <div class="data-section" id="section-site-settings">
+        <div class="section-toolbar">
+            <h2>Site Settings</h2>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
+            <!-- About Us Settings -->
+            <div
+                style="background:var(--admin-surface);border:1px solid var(--admin-border);border-radius:var(--admin-radius);padding:24px">
+                <h3 style="margin-bottom:16px;font-size:16px"><i class="fas fa-info-circle"
+                        style="color:var(--admin-primary);margin-right:8px"></i>About Us</h3>
+                <form id="aboutSettingsForm" onsubmit="saveSettings(event,'about')">
+                    <div class="modal-form">
+                        <div class="form-group">
+                            <label>Company Description</label>
+                            <textarea id="set_about_description" rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Mission Statement</label>
+                            <textarea id="set_about_mission" rows="2"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Vision Statement</label>
+                            <textarea id="set_about_vision" rows="2"></textarea>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Experience Years</label>
+                                <input type="text" id="set_about_experience_years" placeholder="10+">
+                            </div>
+                            <div class="form-group">
+                                <label>Customers Served</label>
+                                <input type="text" id="set_about_customers_served" placeholder="15,000+">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Tours Completed</label>
+                                <input type="text" id="set_about_tours_completed" placeholder="2,000+">
+                            </div>
+                            <div class="form-group">
+                                <label>Team Members</label>
+                                <input type="text" id="set_about_team_members" placeholder="50+">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn-admin btn-admin-primary"
+                            style="width:100%;justify-content:center">
+                            <i class="fas fa-save"></i> Save About Settings
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <!-- Contact Settings -->
+            <div
+                style="background:var(--admin-surface);border:1px solid var(--admin-border);border-radius:var(--admin-radius);padding:24px">
+                <h3 style="margin-bottom:16px;font-size:16px"><i class="fas fa-address-book"
+                        style="color:var(--admin-primary);margin-right:8px"></i>Contact Information</h3>
+                <form id="contactSettingsForm" onsubmit="saveSettings(event,'contact')">
+                    <div class="modal-form">
+                        <div class="form-group">
+                            <label>Address</label>
+                            <textarea id="set_contact_address" rows="2"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Phone</label>
+                            <input type="text" id="set_contact_phone" placeholder="+91 7451 043 112">
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" id="set_contact_email" placeholder="email@example.com">
+                        </div>
+                        <div class="form-group">
+                            <label>WhatsApp Number (digits only)</label>
+                            <input type="text" id="set_contact_whatsapp" placeholder="917451043112">
+                        </div>
+                        <div class="form-group">
+                            <label>Facebook URL</label>
+                            <input type="url" id="set_social_facebook" placeholder="https://facebook.com/...">
+                        </div>
+                        <div class="form-group">
+                            <label>Instagram URL</label>
+                            <input type="url" id="set_social_instagram" placeholder="https://instagram.com/...">
+                        </div>
+                        <button type="submit" class="btn-admin btn-admin-primary"
+                            style="width:100%;justify-content:center">
+                            <i class="fas fa-save"></i> Save Contact Settings
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    </div> <!-- end admin-content -->
+    </main>
+    </div>
+
+    <!-- ======== DESTINATION MODAL ======== -->
+    <div class="modal-overlay" id="destinationFormModal">
+        <div class="modal">
+            <form id="destinationForm" onsubmit="saveDestination(event)" class="modal-form">
+                <div class="modal-header">
+                    <h3>Add Destination</h3>
+                    <button type="button" class="modal-close" onclick="closeAllModals()">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Title *</label>
+                            <input type="text" id="dTitle" required placeholder="Kedarnath">
+                        </div>
+                        <div class="form-group">
+                            <label>Icon (Font Awesome)</label>
+                            <input type="text" id="dIcon" placeholder="fas fa-mountain">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Description *</label>
+                        <textarea id="dDescription" required rows="3"
+                            placeholder="Description of the destination..."></textarea>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Elevation</label>
+                            <input type="text" id="dElevation" placeholder="3,583m">
+                        </div>
+                        <div class="form-group">
+                            <label>Best Time to Visit</label>
+                            <input type="text" id="dBestTime" placeholder="May - October">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Distance from Haridwar</label>
+                            <input type="text" id="dDistance" placeholder="223 km">
+                        </div>
+                        <div class="form-group">
+                            <label>Sort Order</label>
+                            <input type="number" id="dSortOrder" value="0">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Destination Image</label>
+                        <div class="upload-zone" id="destUploadZone">
+                            <input type="file" id="dImageFile" accept="image/*" class="file-input"
+                                onchange="previewUpload(this, 'destImgPreview', 'dImageUrl')">
+                            <div class="upload-placeholder">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <span>Click to upload or drag image</span>
+                                <small>JPG, PNG, WebP — Max 5MB</small>
+                            </div>
+                            <img class="image-preview" id="destImgPreview" alt="Preview">
+                        </div>
+                        <div class="upload-or">— or paste image URL —</div>
+                        <input type="url" id="dImageUrl" class="img-url-input"
+                            placeholder="https://example.com/image.jpg">
+                        <div class="upload-status" id="destUploadStatus"></div>
+                    </div>
+                    <div class="form-group">
+                        <label>Link URL (optional)</label>
+                        <input type="url" id="dLinkUrl" placeholder="yatras/kedarnath.html">
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="dActive" checked style="width:auto;margin-right:8px">
+                            Active (visible on website)
+                        </label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-admin btn-admin-outline" onclick="closeAllModals()">Cancel</button>
+                    <button type="submit" class="btn-admin btn-admin-primary">
+                        <i class="fas fa-save"></i> Save Destination
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ======== SERVICE MODAL ======== -->
+    <div class="modal-overlay" id="serviceFormModal">
+        <div class="modal">
+            <form id="serviceForm" onsubmit="saveService(event)" class="modal-form">
+                <div class="modal-header">
+                    <h3>Add Service</h3>
+                    <button type="button" class="modal-close" onclick="closeAllModals()">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Service Title *</label>
+                            <input type="text" id="sTitle" required placeholder="Pilgrimage Tours">
+                        </div>
+                        <div class="form-group">
+                            <label>Icon (Font Awesome)</label>
+                            <input type="text" id="sIcon" placeholder="fas fa-om">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Description *</label>
+                        <textarea id="sDescription" required rows="3"
+                            placeholder="Description of the service..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Service Image (optional)</label>
+                        <div class="upload-zone">
+                            <input type="file" id="sImageFile" accept="image/*" class="file-input"
+                                onchange="previewUpload(this, 'serviceImgPreview', 'sImageUrl')">
+                            <div class="upload-placeholder">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <span>Click to upload image</span>
+                                <small>JPG, PNG, WebP — Max 5MB</small>
+                            </div>
+                            <img class="image-preview" id="serviceImgPreview" alt="Preview">
+                        </div>
+                        <div class="upload-or">— or paste image URL —</div>
+                        <input type="url" id="sImageUrl" class="img-url-input"
+                            placeholder="https://example.com/image.jpg">
+                        <div class="upload-status" id="serviceUploadStatus"></div>
+                    </div>
+                    <div class="form-group">
+                        <label>Service Features</label>
+                        <div class="highlights-input">
+                            <input type="text" id="serviceFeatureInput" placeholder="e.g. Chardham Yatra">
+                            <button type="button" class="btn-admin btn-admin-primary btn-admin-sm"
+                                onclick="addServiceFeature()">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                        <ul class="highlights-list" id="serviceFeaturesList"></ul>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>CTA Button Text</label>
+                            <input type="text" id="sCtaText" placeholder="Enquire Now">
+                        </div>
+                        <div class="form-group">
+                            <label>CTA URL</label>
+                            <input type="text" id="sCtaUrl" placeholder="https://wa.me/917451043112">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Sort Order</label>
+                            <input type="number" id="sSortOrder" value="0">
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="sActive" checked style="width:auto;margin-right:8px">
+                                Active
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-admin btn-admin-outline" onclick="closeAllModals()">Cancel</button>
+                    <button type="submit" class="btn-admin btn-admin-primary">
+                        <i class="fas fa-save"></i> Save Service
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="admin.js"></script>
     <script>
