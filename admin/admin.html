@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Admin Panel | Wander Peaks</title>
+    <link rel="icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="admin.css">
+</head>
+
+<body>
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- ============ LOGIN SCREEN ============ -->
+    <div class="login-container" id="loginScreen">
+        <div class="login-card">
+            <div class="login-logo">
+                <i class="fas fa-mountain"></i>
+            </div>
+            <h1>Wander Peaks</h1>
+            <p>Admin Dashboard — Sign in to manage your website</p>
+            <div class="login-error" id="loginError"></div>
+            <form class="login-form" id="loginForm" onsubmit="return handleLogin(event)">
+                <div class="form-group">
+                    <label for="loginUser">Username</label>
+                    <input type="text" id="loginUser" placeholder="Enter username" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPass">Password</label>
+                    <input type="password" id="loginPass" placeholder="Enter password" required>
+                </div>
+                <button type="submit" class="btn-admin btn-admin-primary"
+                    style="width:100%;justify-content:center;margin-top:8px">
+                    <i class="fas fa-sign-in-alt"></i> Sign In
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ============ ADMIN LAYOUT ============ -->
+    <div class="admin-layout" id="adminLayout">
+
+        <!-- Sidebar Overlay (mobile) -->
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+        <!-- Sidebar -->
+        <aside class="admin-sidebar" id="adminSidebar">
+            <div class="sidebar-header">
+                <img src="../images/logo.png" alt="Logo" onerror="this.style.display='none'">
+                <div>
+                    <h2>WanderPeaks</h2>
+                    <span>Admin Panel</span>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="sidebar-nav-label">Main</div>
+                <a class="nav-item active" data-section="dashboard">
+                    <i class="fas fa-th-large"></i> Dashboard
+                </a>
+                <a class="nav-item" data-section="enquiries">
+                    <i class="fas fa-envelope"></i> Enquiries
+                    <span class="badge" id="enquiriesBadge" style="display:none">0</span>
+                </a>
+
+                <div class="sidebar-nav-label">Content</div>
+                <a class="nav-item" data-section="testimonials">
+                    <i class="fas fa-star"></i> Testimonials
+                </a>
+                <a class="nav-item" data-section="packages">
+                    <i class="fas fa-suitcase"></i> Packages
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <a class="nav-item" href="../index.html" target="_blank">
+                    <i class="fas fa-external-link-alt"></i> View Website
+                </a>
+                <a class="nav-item" onclick="handleLogout()" style="cursor:pointer">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-main">
+            <!-- Header -->
+            <header class="admin-header">
+                <div class="admin-header-left">
+                    <button class="mobile-menu-btn" id="mobileMenuBtn">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h1 id="sectionTitle">Dashboard</h1>
+                </div>
+                <div class="admin-header-right">
+                    <a href="../testimonials.html" target="_blank" class="header-btn">
+                        <i class="fas fa-eye"></i> View Testimonials Page
+                    </a>
+                </div>
+            </header>
+
+            <div class="admin-content">
+                <!-- ======== DASHBOARD ======== -->
+                <div class="data-section active" id="section-dashboard">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-card-header">
+                                <div class="stat-icon enquiries"><i class="fas fa-envelope"></i></div>
+                            </div>
+                            <div class="stat-value" id="statEnquiries">0</div>
+                            <div class="stat-label">Total Enquiries</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-card-header">
+                                <div class="stat-icon new-enquiries"><i class="fas fa-bell"></i></div>
+                            </div>
+                            <div class="stat-value" id="statNewEnquiries">0</div>
+                            <div class="stat-label">New Enquiries</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-card-header">
+                                <div class="stat-icon testimonials"><i class="fas fa-star"></i></div>
+                            </div>
+                            <div class="stat-value" id="statTestimonials">0</div>
+                            <div class="stat-label">Testimonials</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-card-header">
+                                <div class="stat-icon packages"><i class="fas fa-suitcase"></i></div>
+                            </div>
+                            <div class="stat-value" id="statPackages">0</div>
+                            <div class="stat-label">Packages</div>
+                        </div>
+                    </div>
+
+                    <div
+                        style="background:var(--admin-surface);border:1px solid var(--admin-border);border-radius:var(--admin-radius);padding:32px;text-align:center">
+                        <h3 style="margin-bottom:8px">Welcome to WanderPeaks Admin</h3>
+                        <p style="color:var(--admin-text-secondary);font-size:14px;max-width:500px;margin:0 auto 24px">
+                            Manage your contact enquiries, customer testimonials, and destination packages from here.
+                        </p>
+                        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+                            <button class="btn-admin btn-admin-primary" onclick="navigateTo('enquiries')">
+                                <i class="fas fa-envelope"></i> View Enquiries
+                            </button>
+                            <button class="btn-admin btn-admin-outline" onclick="navigateTo('testimonials')">
+                                <i class="fas fa-star"></i> Manage Testimonials
+                            </button>
+                            <button class="btn-admin btn-admin-outline" onclick="navigateTo('packages')">
+                                <i class="fas fa-suitcase"></i> Manage Packages
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ======== ENQUIRIES ======== -->
+                <div class="data-section" id="section-enquiries">
+                    <div class="section-toolbar">
+                        <h2>Contact Enquiries</h2>
+                        <div class="toolbar-actions">
+                            <input type="text" class="search-input" placeholder="Search enquiries..."
+                                oninput="searchTable('enquiriesTableBody', this.value)">
+                        </div>
+                    </div>
+
+                    <div class="data-table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Name / Email</th>
+                                    <th>Phone</th>
+                                    <th>Package</th>
+                                    <th>Status</th>
+                                    <th>Date</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="enquiriesTableBody"></tbody>
+                        </table>
+                    </div>
+
+                    <div class="empty-state" id="enquiriesEmpty" style="display:none">
+                        <i class="fas fa-inbox"></i>
+                        <h3>No enquiries yet</h3>
+                        <p>Contact form submissions will appear here</p>
+                    </div>
+                </div>
+
+                <!-- ======== TESTIMONIALS ======== -->
+                <div class="data-section" id="section-testimonials">
+                    <div class="section-toolbar">
+                        <h2>Customer Testimonials</h2>
+                        <div class="toolbar-actions">
+                            <input type="text" class="search-input" placeholder="Search testimonials..."
+                                oninput="searchTable('testimonialsTableBody', this.value)">
+                            <button class="btn-admin btn-admin-primary" onclick="openTestimonialModal()">
+                                <i class="fas fa-plus"></i> Add Testimonial
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="data-table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Customer</th>
+                                    <th>Rating</th>
+                                    <th>Review</th>
+                                    <th>Featured</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="testimonialsTableBody"></tbody>
+                        </table>
+                    </div>
+
+                    <div class="empty-state" id="testimonialsEmpty" style="display:none">
+                        <i class="fas fa-star"></i>
+                        <h3>No testimonials yet</h3>
+                        <p>Add customer testimonials to showcase on your website</p>
+                        <button class="btn-admin btn-admin-primary" onclick="openTestimonialModal()">
+                            <i class="fas fa-plus"></i> Add First Testimonial
+                        </button>
+                    </div>
+                </div>
+
+                <!-- ======== PACKAGES ======== -->
+                <div class="data-section" id="section-packages">
+                    <div class="section-toolbar">
+                        <h2>Destination Packages</h2>
+                        <div class="toolbar-actions">
+                            <input type="text" class="search-input" placeholder="Search packages..."
+                                oninput="searchTable('packagesTableBody', this.value)">
+                            <button class="btn-admin btn-admin-primary" onclick="openPackageModal()">
+                                <i class="fas fa-plus"></i> Add Package
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="data-table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Package</th>
+                                    <th>Duration</th>
+                                    <th>Route</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="packagesTableBody"></tbody>
+                        </table>
+                    </div>
+
+                    <div class="empty-state" id="packagesEmpty" style="display:none">
+                        <i class="fas fa-suitcase"></i>
+                        <h3>No packages yet</h3>
+                        <p>Add destination packages to display on your website</p>
+                        <button class="btn-admin btn-admin-primary" onclick="openPackageModal()">
+                            <i class="fas fa-plus"></i> Add First Package
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- ============ MODALS ============ -->
+
+    <!-- Enquiry Detail Modal -->
+    <div class="modal-overlay" id="enquiryModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Enquiry Details</h3>
+                <button class="modal-close"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body enquiry-detail" id="enquiryDetailContent"></div>
+            <div class="modal-footer">
+                <button class="btn-admin btn-admin-outline" onclick="closeAllModals()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Testimonial Form Modal -->
+    <div class="modal-overlay" id="testimonialFormModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Add Testimonial</h3>
+                <button class="modal-close"><i class="fas fa-times"></i></button>
+            </div>
+            <form class="modal-form" id="testimonialForm" onsubmit="saveTestimonial(event)">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="tCustomerName">Customer Name *</label>
+                        <input type="text" id="tCustomerName" required placeholder="e.g. Rajesh Kumar">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="tLocation">Location *</label>
+                            <input type="text" id="tLocation" required placeholder="e.g. New Delhi">
+                        </div>
+                        <div class="form-group">
+                            <label for="tRating">Rating *</label>
+                            <select id="tRating" required>
+                                <option value="5">★★★★★ (5)</option>
+                                <option value="4">★★★★☆ (4)</option>
+                                <option value="3">★★★☆☆ (3)</option>
+                                <option value="2">★★☆☆☆ (2)</option>
+                                <option value="1">★☆☆☆☆ (1)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="tReview">Review *</label>
+                        <textarea id="tReview" rows="4" required
+                            placeholder="Customer's review of their experience..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Customer Photo</label>
+                        <div class="upload-zone" id="testimonialUploadZone">
+                            <input type="file" id="tPhotoFile" accept="image/*" class="file-input"
+                                onchange="previewUpload(this, 'testimonialPhotoPreview', 'tPhotoUrl')">
+                            <div class="upload-placeholder">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <span>Click to upload or drag photo here</span>
+                                <small>JPG, PNG, WebP — Max 5MB</small>
+                            </div>
+                            <img class="image-preview" id="testimonialPhotoPreview" alt="Preview">
+                        </div>
+                        <div class="upload-or">— or paste image URL —</div>
+                        <input type="url" id="tPhotoUrl" class="img-url-input"
+                            placeholder="https://example.com/photo.jpg">
+                        <div class="upload-status" id="testimonialUploadStatus"></div>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="tFeatured" style="width:auto;margin-right:8px">
+                            Featured testimonial
+                        </label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-admin btn-admin-outline" onclick="closeAllModals()">Cancel</button>
+                    <button type="submit" class="btn-admin btn-admin-primary">
+                        <i class="fas fa-save"></i> Save Testimonial
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Package Form Modal -->
+    <div class="modal-overlay" id="packageFormModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Add Package</h3>
+                <button class="modal-close"><i class="fas fa-times"></i></button>
+            </div>
+            <form class="modal-form" id="packageForm" onsubmit="savePackage(event)">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="pTitle">Package Title *</label>
+                        <input type="text" id="pTitle" required placeholder="e.g. Chardham Yatra">
+                    </div>
+                    <div class="form-group">
+                        <label for="pTagline">Tagline</label>
+                        <input type="text" id="pTagline" placeholder="e.g. Explore Divine Tranquility">
+                    </div>
+                    <div class="form-group">
+                        <label for="pDescription">Description *</label>
+                        <textarea id="pDescription" rows="3" required
+                            placeholder="Detailed description of the package..."></textarea>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="pDuration">Duration *</label>
+                            <input type="text" id="pDuration" required placeholder="e.g. 9 Days / 8 Nights">
+                        </div>
+                        <div class="form-group">
+                            <label for="pBadge">Badge</label>
+                            <input type="text" id="pBadge" placeholder="e.g. Most Popular, Premium">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="pRoute">Route *</label>
+                        <input type="text" id="pRoute" required placeholder="e.g. Haridwar - Kedarnath - Badrinath">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="pMinPersons">Min Persons</label>
+                            <input type="number" id="pMinPersons" min="1" value="2">
+                        </div>
+                        <div class="form-group">
+                            <label for="pSortOrder">Sort Order</label>
+                            <input type="number" id="pSortOrder" value="0">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Package Image</label>
+                        <div class="upload-zone" id="packageUploadZone">
+                            <input type="file" id="pImageFile" accept="image/*" class="file-input"
+                                onchange="previewUpload(this, 'packageImgPreview', 'pImageUrl')">
+                            <div class="upload-placeholder">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <span>Click to upload or drag image here</span>
+                                <small>JPG, PNG, WebP — Max 5MB</small>
+                            </div>
+                            <img class="image-preview" id="packageImgPreview" alt="Preview">
+                        </div>
+                        <div class="upload-or">— or paste image URL —</div>
+                        <input type="url" id="pImageUrl" class="img-url-input"
+                            placeholder="https://example.com/image.jpg">
+                        <div class="upload-status" id="packageUploadStatus"></div>
+                    </div>
+                    <div class="form-group">
+                        <label>Package Highlights</label>
+                        <div class="highlights-input">
+                            <input type="text" id="highlightInput" placeholder="e.g. Comfortable accommodation">
+                            <button type="button" class="btn-admin btn-admin-primary btn-admin-sm"
+                                onclick="addHighlight()">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                        <ul class="highlights-list" id="highlightsList"></ul>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="pActive" checked style="width:auto;margin-right:8px">
+                            Active (visible on website)
+                        </label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-admin btn-admin-outline" onclick="closeAllModals()">Cancel</button>
+                    <button type="submit" class="btn-admin btn-admin-primary">
+                        <i class="fas fa-save"></i> Save Package
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Supabase JS Client CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="admin.js"></script>
+    <script>
+        // Fallback: ensure login handler is attached even if admin.js had issues
+        (function () {
+            var form = document.getElementById('loginForm');
+            if (form && !form._listenerAttached) {
+                form.addEventListener('submit', function (e) {
+                    e.preventDefault();
+                    if (typeof handleLogin === 'function') {
+                        handleLogin(e);
+                    }
+                });
+            }
+        })();
+    </script>
+</body>
+
+</html>

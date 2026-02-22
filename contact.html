@@ -131,6 +131,7 @@
                 <li><a href="packages.html" class="nav-link">Packages</a></li>
                 <li><a href="destinations.html" class="nav-link">Destinations</a></li>
                 <li><a href="services.html" class="nav-link">Services</a></li>
+                <li><a href="testimonials.html" class="nav-link">Testimonials</a></li>
                 <li><a href="about.html" class="nav-link">About Us</a></li>
                 <li><a href="contact.html" class="nav-link active">Contact</a></li>
                 <li class="nav-cta-mobile">
@@ -410,9 +411,17 @@
     </footer>
 
     <script src="js/main.js"></script>
+    <!-- Supabase JS Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
+        // ---- SUPABASE CONFIG ----
+        const SUPABASE_URL = 'https://fcxatqillzskuqyaubws.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZjeGF0cWlsbHpza3VxeWF1YndzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE3NDQ1MzksImV4cCI6MjA4NzMyMDUzOX0.ZtaN4zzqi93Ha_x1jnGvk8z72lnD6A41asIuxvLE4II';
+
+        const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
         // Contact form submission handler
-        document.getElementById('contactForm').addEventListener('submit', function (e) {
+        document.getElementById('contactForm').addEventListener('submit', async function (e) {
             e.preventDefault();
 
             // Get form data
@@ -420,17 +429,33 @@
             const name = formData.get('name');
             const email = formData.get('email');
             const phone = formData.get('phone');
-            const package = formData.get('package');
+            const selectedPackage = formData.get('package');
             const travelers = formData.get('travelers');
             const date = formData.get('date');
             const message = formData.get('message');
+
+            // Save to Supabase
+            try {
+                await sb.from('enquiries').insert([{
+                    name: name,
+                    email: email,
+                    phone: phone,
+                    package: selectedPackage || null,
+                    travelers: travelers ? parseInt(travelers) : null,
+                    travel_date: date || null,
+                    message: message,
+                    status: 'new'
+                }]);
+            } catch (err) {
+                console.error('Failed to save enquiry:', err);
+            }
 
             // Create WhatsApp message
             let whatsappMessage = `*New Enquiry from Website*%0A%0A`;
             whatsappMessage += `*Name:* ${name}%0A`;
             whatsappMessage += `*Email:* ${email}%0A`;
             whatsappMessage += `*Phone:* ${phone}%0A`;
-            if (package) whatsappMessage += `*Package:* ${package}%0A`;
+            if (selectedPackage) whatsappMessage += `*Package:* ${selectedPackage}%0A`;
             if (travelers) whatsappMessage += `*Travelers:* ${travelers}%0A`;
             if (date) whatsappMessage += `*Travel Date:* ${date}%0A`;
             whatsappMessage += `%0A*Message:*%0A${message}`;
@@ -439,7 +464,10 @@
             window.open(`https://wa.me/917451043112?text=${whatsappMessage}`, '_blank');
 
             // Show success message
-            alert('Thank you for your enquiry! You will be redirected to WhatsApp to send your message.');
+            alert('Thank you for your enquiry! Your message has been saved and you will be redirected to WhatsApp.');
+
+            // Reset form
+            this.reset();
         });
     </script>
 </body>

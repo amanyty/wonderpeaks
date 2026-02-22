@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PJP5H3R5C1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-PJP5H3R5C1');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Read real testimonials from Wander Peaks customers. See photos and reviews from pilgrims who experienced our Chardham Yatra, Kedarnath, and Badrinath packages.">
+    <title>Customer Testimonials | Wander Peaks - Real Reviews & Photos</title>
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://wanderpeaks.com/testimonials.html">
+
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="Customer Testimonials | Wander Peaks">
+    <meta property="og:description"
+        content="See what our customers say about their Himalayan pilgrimages with Wander Peaks.">
+    <meta property="og:image" content="https://wanderpeaks.com/images/logo.png">
+    <meta property="og:url" content="https://wanderpeaks.com/testimonials.html">
+    <meta property="og:type" content="website">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- Favicon -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" type="image/png" sizes="48x48" href="images/favicon-48.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="images/favicon-192.png">
+    <link rel="apple-touch-icon" sizes="192x192" href="images/favicon-192.png">
+
+    <style>
+        /* Testimonials Page Specific Styles */
+        .testimonials-grid-page {
+            padding: 80px 0;
+            background: #f8f9fa;
+        }
+
+        .testimonials-masonry {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 28px;
+        }
+
+        .testimonial-card-page {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .testimonial-card-page:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+        }
+
+        .testimonial-card-page .card-photo {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .testimonial-card-page .card-body {
+            padding: 24px;
+        }
+
+        .testimonial-card-page .card-rating {
+            color: #f97316;
+            font-size: 16px;
+            margin-bottom: 12px;
+            letter-spacing: 2px;
+        }
+
+        .testimonial-card-page .card-review {
+            font-size: 15px;
+            line-height: 1.7;
+            color: #475569;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        .testimonial-card-page .card-review::before {
+            content: '\201C';
+            font-size: 28px;
+            color: #f97316;
+            font-weight: 700;
+            line-height: 0;
+            margin-right: 4px;
+            vertical-align: -0.3em;
+        }
+
+        .testimonial-card-page .card-author {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding-top: 16px;
+            border-top: 1px solid #f1f5f9;
+        }
+
+        .testimonial-card-page .author-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #f97316;
+        }
+
+        .testimonial-card-page .author-name {
+            font-weight: 600;
+            font-size: 15px;
+            color: #1e293b;
+        }
+
+        .testimonial-card-page .author-location {
+            font-size: 13px;
+            color: #94a3b8;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* No photo variant */
+        .testimonial-card-page.no-photo .card-body {
+            padding: 32px 24px;
+            background: linear-gradient(135deg, #fff7ed, #fff);
+        }
+
+        .testimonials-empty-state {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .testimonials-empty-state i {
+            font-size: 64px;
+            color: #f97316;
+            opacity: 0.3;
+            margin-bottom: 16px;
+        }
+
+        .testimonials-empty-state h3 {
+            font-size: 22px;
+            color: #475569;
+            margin-bottom: 8px;
+        }
+
+        .testimonials-empty-state p {
+            color: #94a3b8;
+            font-size: 15px;
+        }
+
+        .testimonials-loading {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .testimonials-loading .spinner-page {
+            width: 48px;
+            height: 48px;
+            border: 4px solid #e2e8f0;
+            border-top-color: #f97316;
+            border-radius: 50%;
+            animation: spinPage 0.8s linear infinite;
+            margin: 0 auto 16px;
+        }
+
+        @keyframes spinPage {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .testimonials-stats {
+            display: flex;
+            justify-content: center;
+            gap: 48px;
+            padding: 40px 0;
+            flex-wrap: wrap;
+        }
+
+        .testimonials-stats .stat {
+            text-align: center;
+        }
+
+        .testimonials-stats .stat-number {
+            font-size: 36px;
+            font-weight: 700;
+            color: #f97316;
+        }
+
+        .testimonials-stats .stat-text {
+            font-size: 14px;
+            color: #64748b;
+            margin-top: 4px;
+        }
+
+        @media (max-width: 768px) {
+            .testimonials-masonry {
+                grid-template-columns: 1fr;
+            }
+
+            .testimonials-stats {
+                gap: 24px;
+            }
+
+            .testimonials-stats .stat-number {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Floating WhatsApp & Call Buttons -->
+    <div class="floating-buttons">
+        <a href="https://wa.me/917451043112" class="floating-btn whatsapp" target="_blank"
+            aria-label="Chat on WhatsApp">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+        <a href="tel:+917451043112" class="floating-btn call" aria-label="Call Us">
+            <i class="fas fa-phone-alt"></i>
+        </a>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <img src="images/logo.png" alt="Wander Peaks Logo">
+            </a>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+                <span class="hamburger"></span>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li class="nav-dropdown">
+                    <a href="yatras/index.html" class="nav-link">Yatras</a>
+                    <div class="mega-menu">
+                        <div class="mega-menu-column">
+                            <h4>Ek Dham & Do Dham</h4>
+                            <ul>
+                                <li><a href="yatras/kedarnath.html"><i class="fas fa-om"></i> Kedarnath</a></li>
+                                <li><a href="yatras/badrinath.html"><i class="fas fa-om"></i> Badrinath</a></li>
+                                <li><a href="yatras/do-dham.html"><i class="fas fa-mountain"></i> Do Dham</a></li>
+                            </ul>
+                        </div>
+                        <div class="mega-menu-column">
+                            <h4>Char Dham</h4>
+                            <ul>
+                                <li><a href="yatras/char-dham.html"><i class="fas fa-route"></i> Char Dham</a></li>
+                                <li><a href="yatras/char-dham-helicopter.html"><i class="fas fa-helicopter"></i> By
+                                        Heli</a></li>
+                            </ul>
+                        </div>
+                        <div class="mega-menu-column">
+                            <h4>Panch Yatras</h4>
+                            <ul>
+                                <li><a href="yatras/panch-kedar.html"><i class="fas fa-gopuram"></i> Panch Kedar</a>
+                                </li>
+                                <li><a href="yatras/panch-prayag.html"><i class="fas fa-water"></i> Panch Prayag</a>
+                                </li>
+                                <li><a href="yatras/panch-badri.html"><i class="fas fa-pray"></i> Panch Badri</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+                <li><a href="packages.html" class="nav-link">Packages</a></li>
+                <li><a href="destinations.html" class="nav-link">Destinations</a></li>
+                <li><a href="services.html" class="nav-link">Services</a></li>
+                <li><a href="testimonials.html" class="nav-link active">Testimonials</a></li>
+                <li><a href="about.html" class="nav-link">About Us</a></li>
+                <li><a href="contact.html" class="nav-link">Contact</a></li>
+                <li class="nav-cta-mobile">
+                    <a href="https://wa.me/917451043112" class="btn btn-primary">Book Now</a>
+                </li>
+            </ul>
+            <a href="https://wa.me/917451043112" class="btn btn-primary nav-cta" target="_blank">Book Now</a>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header"
+        style="background-image: url('https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=1920')">
+        <div class="page-header-overlay"></div>
+        <div class="container">
+            <h1>Customer Testimonials</h1>
+            <p>Real stories from our happy travelers</p>
+            <nav class="breadcrumb">
+                <a href="index.html">Home</a>
+                <span>/</span>
+                <span>Testimonials</span>
+            </nav>
+        </div>
+    </section>
+
+    <!-- Testimonials Stats -->
+    <section style="background:white;border-bottom:1px solid #e2e8f0">
+        <div class="container">
+            <div class="testimonials-stats" id="testimonialsStats">
+                <div class="stat">
+                    <div class="stat-number" id="totalReviews">—</div>
+                    <div class="stat-text">Happy Customers</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number" id="avgRating">—</div>
+                    <div class="stat-text">Average Rating</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">15,000+</div>
+                    <div class="stat-text">Yatras Completed</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Grid -->
+    <section class="testimonials-grid-page">
+        <div class="container">
+            <div class="section-header" style="margin-bottom:48px">
+                <h2>What Our Customers Say</h2>
+                <p>Photos and reviews from pilgrims who experienced the divine journey with us</p>
+            </div>
+
+            <!-- Loading State -->
+            <div class="testimonials-loading" id="testimonialsLoading">
+                <div class="spinner-page"></div>
+                <p style="color:#94a3b8">Loading testimonials...</p>
+            </div>
+
+            <!-- Grid -->
+            <div class="testimonials-masonry" id="testimonialsGrid" style="display:none"></div>
+
+            <!-- Empty State -->
+            <div class="testimonials-empty-state" id="testimonialsEmptyState" style="display:none">
+                <i class="fas fa-comments"></i>
+                <h3>Testimonials Coming Soon!</h3>
+                <p>We're gathering stories from our amazing customers. Check back soon!</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready to Start Your Own Journey?</h2>
+                <p>Join thousands of satisfied pilgrims who chose Wander Peaks</p>
+                <div class="cta-buttons">
+                    <a href="packages.html" class="btn btn-white">View Packages</a>
+                    <a href="https://wa.me/917451043112" class="btn btn-outline-white" target="_blank">
+                        <i class="fab fa-whatsapp"></i> Chat with Us
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col about-col">
+                    <img src="images/logo.png" alt="Wander Peaks Logo" class="footer-logo">
+                    <p>Wander Peaks is a premium Himalayan trekking and pan-India holiday tour operator based in
+                        Haridwar. We specialize in sacred pilgrimage tours and adventure experiences.</p>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/profile.php?id=100418429743492" target="_blank"
+                            aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/utt.arakhandchardhamyatra" target="_blank"
+                            aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://wa.me/917451043112" target="_blank" aria-label="WhatsApp"><i
+                                class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="packages.html">Packages</a></li>
+                        <li><a href="destinations.html">Destinations</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="testimonials.html">Testimonials</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Our Services</h4>
+                    <ul>
+                        <li><a href="packages.html#chardham">Chardham Yatra</a></li>
+                        <li><a href="packages.html#do-dham">Do Dham Yatra</a></li>
+                        <li><a href="packages.html#kedarnath">Kedarnath Yatra</a></li>
+                        <li><a href="packages.html#badrinath">Badrinath Yatra</a></li>
+                        <li><a href="services.html">Custom Tours</a></li>
+                        <li><a href="services.html">Adventure Treks</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col contact-col">
+                    <h4>Contact Us</h4>
+                    <ul class="contact-info">
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Niranjani Akhara Road, Haridwar 249401, Uttarakhand, India</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone-alt"></i>
+                            <a href="tel:+917451043112">+91 7451 043 112</a>
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <a href="mailto:chardhamyatra004@gmail.com">chardhamyatra004@gmail.com</a>
+                        </li>
+                        <li>
+                            <i class="fab fa-whatsapp"></i>
+                            <a href="https://wa.me/917451043112">WhatsApp: +91 7451 043 112</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <p>&copy; 2025 Wander Peaks. All Rights Reserved.</p>
+                <div class="footer-bottom-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms & Conditions</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <!-- Supabase JS Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        // ---- SUPABASE CONFIG ----
+        const SUPABASE_URL = 'https://fcxatqillzskuqyaubws.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZjeGF0cWlsbHpza3VxeWF1YndzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE3NDQ1MzksImV4cCI6MjA4NzMyMDUzOX0.ZtaN4zzqi93Ha_x1jnGvk8z72lnD6A41asIuxvLE4II';
+
+        const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        async function loadTestimonials() {
+            const loading = document.getElementById('testimonialsLoading');
+            const grid = document.getElementById('testimonialsGrid');
+            const empty = document.getElementById('testimonialsEmptyState');
+
+            try {
+                const { data, error } = await sb
+                    .from('testimonials')
+                    .select('*')
+                    .order('is_featured', { ascending: false })
+                    .order('created_at', { ascending: false });
+
+                if (error) throw error;
+
+                loading.style.display = 'none';
+
+                if (!data || data.length === 0) {
+                    empty.style.display = 'block';
+                    return;
+                }
+
+                grid.style.display = 'grid';
+
+                // Update stats
+                document.getElementById('totalReviews').textContent = data.length;
+                const avg = (data.reduce((sum, t) => sum + t.rating, 0) / data.length).toFixed(1);
+                document.getElementById('avgRating').textContent = avg + ' ★';
+
+                // Render testimonials
+                grid.innerHTML = data.map(t => {
+                    const hasPhoto = t.photo_url && t.photo_url.trim() !== '';
+                    const avatarUrl = hasPhoto ? t.photo_url : `https://ui-avatars.com/api/?name=${encodeURIComponent(t.customer_name)}&background=f97316&color=fff&size=96`;
+
+                    return `
+                        <div class="testimonial-card-page ${hasPhoto ? '' : 'no-photo'}">
+                            ${hasPhoto ? `<img src="${t.photo_url}" alt="${escapeHtml(t.customer_name)}" class="card-photo" 
+                                onerror="this.style.display='none'">` : ''}
+                            <div class="card-body">
+                                <div class="card-rating">${'★'.repeat(t.rating)}${'☆'.repeat(5 - t.rating)}</div>
+                                <div class="card-review">${escapeHtml(t.review)}</div>
+                                <div class="card-author">
+                                    <img src="${avatarUrl}" alt="${escapeHtml(t.customer_name)}" class="author-avatar"
+                                        onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(t.customer_name)}&background=f97316&color=fff&size=96'">
+                                    <div>
+                                        <div class="author-name">${escapeHtml(t.customer_name)}</div>
+                                        <div class="author-location"><i class="fas fa-map-marker-alt"></i> ${escapeHtml(t.location)}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+
+            } catch (err) {
+                loading.style.display = 'none';
+                empty.style.display = 'block';
+                console.error('Error loading testimonials:', err);
+            }
+        }
+
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Load on page ready
+        document.addEventListener('DOMContentLoaded', loadTestimonials);
+    </script>
+</body>
+
+</html>
