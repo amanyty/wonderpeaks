@@ -292,6 +292,168 @@
                         </button>
                     </div>
                 </div>
+
+                <!-- ======== DESTINATIONS SECTION ======== -->
+                <div class="data-section" id="section-destinations">
+                    <div class="section-toolbar">
+                        <h2>Destinations</h2>
+                        <div class="toolbar-actions">
+                            <input type="text" class="search-input" placeholder="Search destinations..."
+                                oninput="searchTable('destinationsTableBody', this.value)">
+                            <button class="btn-admin btn-admin-primary" onclick="openDestinationModal()">
+                                <i class="fas fa-plus"></i> Add Destination
+                            </button>
+                        </div>
+                    </div>
+                    <div class="data-table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Destination</th>
+                                    <th>Elevation</th>
+                                    <th>Best Time</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="destinationsTableBody"></tbody>
+                        </table>
+                    </div>
+                    <div class="empty-state" id="destinationsEmpty" style="display:none">
+                        <i class="fas fa-map-marked-alt"></i>
+                        <h3>No destinations yet</h3>
+                        <p>Add destinations to show on your website</p>
+                    </div>
+                </div>
+
+                <!-- ======== SERVICES SECTION ======== -->
+                <div class="data-section" id="section-services">
+                    <div class="section-toolbar">
+                        <h2>Services</h2>
+                        <div class="toolbar-actions">
+                            <input type="text" class="search-input" placeholder="Search services..."
+                                oninput="searchTable('servicesTableBody', this.value)">
+                            <button class="btn-admin btn-admin-primary" onclick="openServiceModal()">
+                                <i class="fas fa-plus"></i> Add Service
+                            </button>
+                        </div>
+                    </div>
+                    <div class="data-table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Service</th>
+                                    <th>Icon</th>
+                                    <th>Features</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="servicesTableBody"></tbody>
+                        </table>
+                    </div>
+                    <div class="empty-state" id="servicesEmpty" style="display:none">
+                        <i class="fas fa-concierge-bell"></i>
+                        <h3>No services yet</h3>
+                        <p>Add services to show on your website</p>
+                    </div>
+                </div>
+
+                <!-- ======== SITE SETTINGS ======== -->
+                <div class="data-section" id="section-site-settings">
+                    <div class="section-toolbar">
+                        <h2>Site Settings</h2>
+                    </div>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
+                        <!-- About Us Settings -->
+                        <div
+                            style="background:var(--admin-surface);border:1px solid var(--admin-border);border-radius:var(--admin-radius);padding:24px">
+                            <h3 style="margin-bottom:16px;font-size:16px"><i class="fas fa-info-circle"
+                                    style="color:var(--admin-primary);margin-right:8px"></i>About Us</h3>
+                            <form id="aboutSettingsForm" onsubmit="saveSettings(event,'about')">
+                                <div class="modal-form">
+                                    <div class="form-group">
+                                        <label>Company Description</label>
+                                        <textarea id="set_about_description" rows="3"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Mission Statement</label>
+                                        <textarea id="set_about_mission" rows="2"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Vision Statement</label>
+                                        <textarea id="set_about_vision" rows="2"></textarea>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label>Experience Years</label>
+                                            <input type="text" id="set_about_experience_years" placeholder="10+">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Customers Served</label>
+                                            <input type="text" id="set_about_customers_served" placeholder="15,000+">
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label>Tours Completed</label>
+                                            <input type="text" id="set_about_tours_completed" placeholder="2,000+">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Team Members</label>
+                                            <input type="text" id="set_about_team_members" placeholder="50+">
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn-admin btn-admin-primary"
+                                        style="width:100%;justify-content:center">
+                                        <i class="fas fa-save"></i> Save About Settings
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        <!-- Contact Settings -->
+                        <div
+                            style="background:var(--admin-surface);border:1px solid var(--admin-border);border-radius:var(--admin-radius);padding:24px">
+                            <h3 style="margin-bottom:16px;font-size:16px"><i class="fas fa-address-book"
+                                    style="color:var(--admin-primary);margin-right:8px"></i>Contact Information</h3>
+                            <form id="contactSettingsForm" onsubmit="saveSettings(event,'contact')">
+                                <div class="modal-form">
+                                    <div class="form-group">
+                                        <label>Address</label>
+                                        <textarea id="set_contact_address" rows="2"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Phone</label>
+                                        <input type="text" id="set_contact_phone" placeholder="+91 7451 043 112">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Email</label>
+                                        <input type="email" id="set_contact_email" placeholder="email@example.com">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>WhatsApp Number (digits only)</label>
+                                        <input type="text" id="set_contact_whatsapp" placeholder="917451043112">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Facebook URL</label>
+                                        <input type="url" id="set_social_facebook"
+                                            placeholder="https://facebook.com/...">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Instagram URL</label>
+                                        <input type="url" id="set_social_instagram"
+                                            placeholder="https://instagram.com/...">
+                                    </div>
+                                    <button type="submit" class="btn-admin btn-admin-primary"
+                                        style="width:100%;justify-content:center">
+                                        <i class="fas fa-save"></i> Save Contact Settings
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </main>
     </div>
@@ -628,10 +790,6 @@
                 </form>
             </div>
         </div>
-    </div>
-
-    </div> <!-- end admin-content -->
-    </main>
     </div>
 
     <!-- ======== DESTINATION MODAL ======== -->
