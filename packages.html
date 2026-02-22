@@ -534,16 +534,7 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- Dynamic Packages from Admin Panel -->
-    <section class="packages-page" id="dynamicPackagesSection" style="display:none;padding-top:0">
-        <div class="container">
-            <div class="section-header" style="margin-bottom:48px">
-                <h2>More Packages</h2>
-                <p>Additional packages curated by our team</p>
-            </div>
+            <!-- Dynamic packages from admin panel load here -->
             <div id="dynamicPackagesContainer"></div>
         </div>
     </section>
@@ -665,9 +656,7 @@
                     if (error) throw error;
                     if (!data || data.length === 0) return;
 
-                    const section = document.getElementById('dynamicPackagesSection');
                     const container = document.getElementById('dynamicPackagesContainer');
-                    section.style.display = 'block';
 
                     container.innerHTML = data.map(p => {
                         const highlights = (p.highlights || []).map(h =>
