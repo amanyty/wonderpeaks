@@ -183,42 +183,14 @@
             }
         }
 
-        .testimonials-stats {
-            display: flex;
-            justify-content: center;
-            gap: 48px;
-            padding: 40px 0;
-            flex-wrap: wrap;
-        }
 
-        .testimonials-stats .stat {
-            text-align: center;
-        }
-
-        .testimonials-stats .stat-number {
-            font-size: 36px;
-            font-weight: 700;
-            color: #f97316;
-        }
-
-        .testimonials-stats .stat-text {
-            font-size: 14px;
-            color: #64748b;
-            margin-top: 4px;
-        }
 
         @media (max-width: 768px) {
             .testimonials-masonry {
                 grid-template-columns: 1fr;
             }
 
-            .testimonials-stats {
-                gap: 24px;
-            }
 
-            .testimonials-stats .stat-number {
-                font-size: 28px;
-            }
         }
     </style>
 </head>
@@ -306,25 +278,6 @@
         </div>
     </section>
 
-    <!-- Testimonials Stats -->
-    <section style="background:white;border-bottom:1px solid #e2e8f0">
-        <div class="container">
-            <div class="testimonials-stats" id="testimonialsStats">
-                <div class="stat">
-                    <div class="stat-number" id="totalReviews">—</div>
-                    <div class="stat-text">Happy Customers</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-number" id="avgRating">—</div>
-                    <div class="stat-text">Average Rating</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-number">15,000+</div>
-                    <div class="stat-text">Yatras Completed</div>
-                </div>
-            </div>
-        </div>
-    </section>
 
     <!-- Testimonials Grid -->
     <section class="testimonials-grid-page">
@@ -475,10 +428,7 @@
 
                 grid.style.display = 'grid';
 
-                // Update stats
-                document.getElementById('totalReviews').textContent = data.length;
-                const avg = (data.reduce((sum, t) => sum + t.rating, 0) / data.length).toFixed(1);
-                document.getElementById('avgRating').textContent = avg + ' ★';
+
 
                 // Render testimonials
                 grid.innerHTML = data.map(t => {
