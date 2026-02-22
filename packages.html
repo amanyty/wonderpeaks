@@ -537,6 +537,17 @@
         </div>
     </section>
 
+    <!-- Dynamic Packages from Admin Panel -->
+    <section class="packages-page" id="dynamicPackagesSection" style="display:none;padding-top:0">
+        <div class="container">
+            <div class="section-header" style="margin-bottom:48px">
+                <h2>More Packages</h2>
+                <p>Additional packages curated by our team</p>
+            </div>
+            <div id="dynamicPackagesContainer"></div>
+        </div>
+    </section>
+
     <!-- Custom Package CTA -->
     <section class="cta-section">
         <div class="container">
@@ -627,6 +638,90 @@
     </footer>
 
     <script src="js/main.js"></script>
+    <!-- Supabase JS Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        (function () {
+            const SUPABASE_URL = 'https://fcxatqillzskuqyaubws.supabase.co';
+            const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZjeGF0cWlsbHpza3VxeWF1YndzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE3NDQ1MzksImV4cCI6MjA4NzMyMDUzOX0.ZtaN4zzqi93Ha_x1jnGvk8z72lnD6A41asIuxvLE4II';
+
+            const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+            function escapeHtml(text) {
+                if (!text) return '';
+                const div = document.createElement('div');
+                div.textContent = text;
+                return div.innerHTML;
+            }
+
+            async function loadDynamicPackages() {
+                try {
+                    const { data, error } = await sb
+                        .from('packages')
+                        .select('*')
+                        .eq('is_active', true)
+                        .order('sort_order', { ascending: true });
+
+                    if (error) throw error;
+                    if (!data || data.length === 0) return;
+
+                    const section = document.getElementById('dynamicPackagesSection');
+                    const container = document.getElementById('dynamicPackagesContainer');
+                    section.style.display = 'block';
+
+                    container.innerHTML = data.map(p => {
+                        const highlights = (p.highlights || []).map(h =>
+                            `<li><i class="fas fa-check"></i> ${escapeHtml(h)}</li>`
+                        ).join('');
+
+                        return `
+                            <div class="package-detail-card">
+                                <div class="package-detail-image">
+                                    <img src="${p.image_url || 'images/chardham.jpg'}" alt="${escapeHtml(p.title)}" 
+                                         onerror="this.src='images/chardham.jpg'">
+                                    ${p.badge ? `<span class="package-badge">${escapeHtml(p.badge)}</span>` : ''}
+                                </div>
+                                <div class="package-detail-content">
+                                    <h2>${escapeHtml(p.title)}</h2>
+                                    ${p.tagline ? `<p class="package-tagline"><em>${escapeHtml(p.tagline)}</em></p>` : ''}
+                                    <p class="package-description">${escapeHtml(p.description)}</p>
+                                    <div class="package-meta">
+                                        <div class="meta-item">
+                                            <i class="far fa-clock"></i>
+                                            <span>${escapeHtml(p.duration)}</span>
+                                        </div>
+                                        <div class="meta-item">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                            <span>${escapeHtml(p.route)}</span>
+                                        </div>
+                                        <div class="meta-item">
+                                            <i class="fas fa-users"></i>
+                                            <span>Min ${p.min_persons || 2} Persons</span>
+                                        </div>
+                                    </div>
+                                    ${highlights ? `
+                                    <div class="package-highlights">
+                                        <h4>Package Highlights</h4>
+                                        <ul>${highlights}</ul>
+                                    </div>` : ''}
+                                    <div class="package-pricing">
+                                        <a href="https://wa.me/917451043112?text=Hi! I'm interested in the ${encodeURIComponent(p.title)} package"
+                                            class="btn btn-primary" target="_blank">
+                                            <i class="fab fa-whatsapp"></i> Book Now
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }).join('');
+                } catch (err) {
+                    console.error('Error loading packages:', err);
+                }
+            }
+
+            document.addEventListener('DOMContentLoaded', loadDynamicPackages);
+        })();
+    </script>
 </body>
 
 </html>
